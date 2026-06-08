@@ -86,6 +86,25 @@ npx wrangler secret put ACCESS_PASSWORD     # change master code
 npx wrangler secret put TOKEN_SECRET        # rotate to force all sessions to re-login
 ```
 
+## Ads landing — ads.realitech.vn (`ads/`)
+
+A **public** paid-ads marketing landing page (Descript-style: hero + framed video, client
+logos, feature cards, Book Demo CTA). Separate from the gated showcase. Lives in `ads/`:
+```
+ads/public/   index.html, styles.css, app.js, assets/ (logo, client logos, preview media)
+ads/wrangler.jsonc   Workers-static-assets config → custom domain ads.realitech.vn
+```
+- Same platform design tokens (Be Vietnam Pro + cyan). The framed-video look is `.frame`.
+- **Book Demo** posts to `https://api.realitech.vn/leads` with `source:"ads"` and captures
+  **UTM params** (utm_source/campaign/term/gclid…) into the lead's `needs`/`demo_project`
+  for ad attribution → visible in cpn.realitech.vn/leads.
+- Served by a **second Cloudflare Worker `realitech-ads`** (static assets, no code), NOT
+  GitHub Pages (Pages allows only one custom domain per repo). Deploy:
+  ```bash
+  cd ads && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy
+  ```
+  Media in `ads/public/assets/media/` are intro-trimmed preview loops copied from `previews/`.
+
 ## Operations
 
 ```bash
