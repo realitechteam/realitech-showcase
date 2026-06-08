@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <script>
+    // Lock the page before paint unless a valid access token already exists.
+    try {
+      var v = JSON.parse(localStorage.getItem("rt_access") || "null");
+      if (!(v && v.exp && v.exp > Date.now())) document.documentElement.classList.add("locked");
+    } catch (e) { document.documentElement.classList.add("locked"); }
+  </script>
+  <title>REALITECH — Reality, Engineered</title>
+  <meta name="description" content="REALITECH builds spatial computing for the enterprise — Digital Twin, VR Training, AR Commerce and Mixed Reality, powered by our in-house engine." />
+
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <meta name="theme-color" content="#07080b" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="REALITECH — Reality, Engineered" />
+  <meta property="og:description" content="Spatial computing for the enterprise — Digital Twin, VR Training, AR Commerce & Mixed Reality, built on our own engine." />
+  <meta property="og:url" content="https://showcase.realitech.vn" />
+  <meta property="og:image" content="https://showcase.realitech.vn/assets/og-realitech.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- grain + grid atmosphere -->
+  <div class="atmos" aria-hidden="true">
+    <div class="atmos__grid"></div>
+    <div class="atmos__glow"></div>
+    <div class="atmos__grain"></div>
+  </div>
+
+  <!-- entry gate (whole-site private wall) -->
+  <div class="entry" id="entryGate" aria-hidden="false">
+    <div class="entry__bg" aria-hidden="true"></div>
+    <div class="entry__card">
+      <img class="entry__logo" src="assets/logo-realitech-white.png" alt="REALITECH" />
+      <p class="entry__eyebrow"><span class="dot dot--live"></span> Private client showcase</p>
+      <h1 class="entry__title">This showcase is <em>by invitation</em>.</h1>
+      <p class="entry__sub">A curated look at projects REALITECH has delivered. Enter your access code to continue.</p>
+      <form class="entry__form" id="entryForm">
+        <input id="entryInput" type="password" placeholder="Access code" autocomplete="off" autocapitalize="off" spellcheck="false" />
+        <button class="btn btn--primary btn--lg" type="submit" id="entrySubmit">Enter →</button>
+      </form>
+      <p class="entry__err" id="entryErr"></p>
+      <div class="entry__contact">
+        <span class="entry__contact-h">No code yet?</span>
+        <button class="btn btn--primary" id="entryBookDemo" type="button">Book a demo →</button>
+        <div class="entry__links">
+          <span class="entry__or">or reach us directly</span>
+          <a href="https://zalo.me/84345678462" target="_blank" rel="noopener">Zalo / Call <b>+84&nbsp;345&nbsp;678&nbsp;462</b></a>
+          <a href="https://wa.me/84345678725" target="_blank" rel="noopener">WhatsApp <b>+84&nbsp;345&nbsp;678&nbsp;725</b></a>
+          <a href="mailto:partner@realitech.dev?subject=REALITECH%20Showcase%20access">Email <b>partner@realitech.dev</b></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- nav -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="REALITECH — home">
+      <img class="nav__logo" src="assets/logo-realitech-white.png" alt="REALITECH" />
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#engine">Engine</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav__cta" href="#contact">
+      <span class="dot"></span> Book a demo
+    </a>
+  </header>
+
+  <!-- hero -->
+  <section class="hero" id="top">
+    <div class="hero__media" id="heroMedia" aria-hidden="true"></div>
+    <div class="hero__scrim"></div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow"><span class="dot dot--live"></span> Spatial computing studio · Est. 2025 · Hồ Chí Minh City</p>
+      <h1 class="hero__title">
+        We don't outsource <span class="ink-strike">pixels</span>.<br />
+        We engineer <em>reality</em>.
+      </h1>
+      <p class="hero__sub">
+        Digital twins, VR training, AR commerce and mixed reality for the enterprise —
+        each one built on <strong>RealitechEditor</strong>, our own spatial engine.
+      </p>
+      <div class="hero__row">
+        <a class="btn btn--primary" href="#work">View the work <span aria-hidden="true">↓</span></a>
+        <a class="btn btn--ghost" href="#engine">The engine behind it</a>
+      </div>
+    </div>
+    <div class="hero__ticker" aria-hidden="true">
+      <div class="ticker__track" id="tickerTrack"></div>
+    </div>
+  </section>
+
+  <!-- index / capabilities -->
+  <section class="index" id="work">
+    <div class="index__head">
+      <p class="kicker">[ Capability index ]</p>
+      <h2 class="index__title">Five verticals. One engine. <span class="serif">Real deployments.</span></h2>
+    </div>
+    <ol class="index__list" id="indexList"></ol>
+  </section>
+
+  <!-- category sections injected here -->
+  <main id="sections"></main>
+
+  <!-- engine spotlight -->
+  <section class="engine" id="engine">
+    <div class="engine__media" id="engineMedia"></div>
+    <div class="engine__body">
+      <p class="kicker">[ Core technology · the moat ]</p>
+      <h2 class="engine__title">RealitechEditor</h2>
+      <p class="engine__lead">
+        Every experience you just watched is authored in <em>one</em> in-house engine.
+        We don't license a black box and we don't subcontract the hard part —
+        the spatial pipeline, the tracking, the runtime are <strong>ours</strong>.
+      </p>
+      <ul class="engine__points">
+        <li><span class="num">01</span> Author once, deploy to AR, VR, MR & WebAR.</li>
+        <li><span class="num">02</span> Markerless tracking, VPS &amp; digital-twin pipeline built in.</li>
+        <li><span class="num">03</span> Enterprise data binding — sensors, BMS, geospatial.</li>
+      </ul>
+      <a class="btn btn--primary" href="#contact">Talk to the team building it</a>
+    </div>
+  </section>
+
+  <!-- proof / stats -->
+  <section class="stats">
+    <div class="stat"><span class="stat__num" data-count="27">27</span><span class="stat__label">Production-grade builds</span></div>
+    <div class="stat"><span class="stat__num" data-count="5">5</span><span class="stat__label">Enterprise verticals</span></div>
+    <div class="stat"><span class="stat__num">1</span><span class="stat__label">In-house spatial engine</span></div>
+    <div class="stat"><span class="stat__num">∞</span><span class="stat__label">Reality to draw from</span></div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <p class="kicker">[ Let's build ]</p>
+    <h2 class="cta__title">Your space.<br /><span class="serif">Made spatial.</span></h2>
+    <p class="cta__sub">Digital twin, training, retail or something nobody's tried yet — bring us the problem.</p>
+    <button class="btn btn--primary btn--lg" id="ctaBookDemo" type="button">Book a demo →</button>
+    <p class="cta__fine">We review by hand and reply within 1 business day · partner@realitech.dev</p>
+  </section>
+
+  <footer class="foot">
+    <span class="foot__brand">
+      <img class="foot__logo" src="assets/logo-realitech-white.png" alt="REALITECH" />
+      <span>© <span id="year"></span></span>
+    </span>
+    <span class="foot__mid">Reality, engineered.</span>
+    <a href="https://realitech.vn">realitech.vn</a>
+  </footer>
+
+  <!-- lightbox -->
+  <div class="lb" id="lb" aria-hidden="true">
+    <button class="lb__close" id="lbClose" aria-label="Close">✕</button>
+    <div class="lb__stage">
+      <div class="lb__player" id="lbPlayer"></div>
+      <div class="lb__meta">
+        <p class="lb__cat" id="lbCat"></p>
+        <h3 class="lb__title" id="lbTitle"></h3>
+        <p class="lb__line" id="lbLine"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- book-demo / lead modal -->
+  <div class="lead" id="leadModal" aria-hidden="true">
+    <div class="lead__card">
+      <button class="lead__close" id="leadClose" aria-label="Close">✕</button>
+      <div class="lead__body" id="leadBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

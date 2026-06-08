@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "realitech-gate",
+  "main": "src/index.js",
+  "compatibility_date": "2026-06-01",
+  "observability": { "enabled": true },
+
+  // Custom domain — wrangler provisions DNS + cert on deploy (zone must be on this account).
+  "routes": [{ "pattern": "gate.realitech.vn", "custom_domain": true }],
+
+  // Private bucket holding the full <slug>.mp4 videos. Created in Phase 2.
+  "r2_buckets": [
+    { "binding": "VIDEOS", "bucket_name": "realitech-showcase-videos" }
+  ],
+
+  // Lead log + rate limiting. Replace "id" with the real namespace id after:
+  //   npx wrangler kv namespace create LEADS
+  "kv_namespaces": [
+    { "binding": "LEADS", "id": "9a9b94da77b3441894cf0269908f5e42" }
+  ],
+
+  "vars": {
+    "LEAD_TO": "partner@realitech.dev",
+    "LEAD_FROM": "alerts@realitech.vn",
+    "ALLOWED_ORIGINS": "https://showcase.realitech.vn,https://datnpq.github.io"
+  }
+
+  // Secrets (set via `wrangler secret put`, NOT committed):
+  //   ACCESS_PASSWORD   master access code
+  //   TOKEN_SECRET      HMAC signing key
+  //   ALERT_WEBHOOK     (optional) Lark/Slack/Discord webhook for access alerts
+  //   RESEND_API_KEY    (optional) Resend key to email alerts to LEAD_TO
+}

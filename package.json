@@ -1,0 +1,13 @@
+{
+  "name": "realitech-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "REALITECH spatial-computing showcase — Digital Twin, VR Training, AR Commerce, Mixed Reality.",
+  "scripts": {
+    "dev": "npx --yes serve . -l 5173",
+    "start": "npx --yes serve . -l 5173",
+    "optimize": "node scripts/optimize.mjs",
+    "previews": "node scripts/make-previews.mjs"
+  }
+}
