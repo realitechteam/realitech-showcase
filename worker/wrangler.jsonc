@@ -22,7 +22,7 @@
   "vars": {
     "LEAD_TO": "partner@realitech.dev",
     "LEAD_FROM": "alerts@realitech.vn",
-    "ALLOWED_ORIGINS": "https://showcase.realitech.vn,https://datnpq.github.io"
+    "ALLOWED_ORIGINS": "https://showcase.realitech.vn,https://realitechteam.github.io"
   }
 
   // Secrets (set via `wrangler secret put`, NOT committed):

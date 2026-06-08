@@ -4,9 +4,10 @@ A **private, invitation-gated** showcase of REALITECH's delivered projects, live
 **https://showcase.realitech.vn**. Visitors must enter an access code; full demo videos
 are served only through a Cloudflare Worker after unlocking.
 
-> Standalone repo (`github.com/datnpq/realitech-showcase`). NOT part of the
-> `realitech-platform` monorepo (`github.com/realitechteam/realitech-platform`). They
-> share only the brand, the `realitech.vn` domain, and the Cloudflare account.
+> Standalone repo (`github.com/realitechteam/realitech-showcase`). NOT part of the
+> `realitech-platform` monorepo (`github.com/realitechteam/realitech-platform`), but under
+> the same `realitechteam` account. They share brand, the `realitech.vn` domain, and the
+> Cloudflare account.
 
 ## Stack & layout
 
@@ -71,11 +72,10 @@ fonts **Be Vietnam Pro** + **JetBrains Mono**.
 
 ## Deploy
 
-**Frontend (Pages):** commit, then push `main` as the **`datnpq`** account (the credential
-manager may default to `realitechteam` — switch first):
+**Frontend (Pages):** commit, then push `main` as the **`realitechteam`** account:
 ```bash
-gh auth switch --user datnpq
-git push "https://x-access-token:$(gh auth token)@github.com/datnpq/realitech-showcase.git" main
+gh auth switch --user realitechteam
+git push "https://x-access-token:$(gh auth token)@github.com/realitechteam/realitech-showcase.git" main
 ```
 GitHub Pages auto-rebuilds; custom domain `showcase.realitech.vn` (Cloudflare CNAME, DNS-only).
 
@@ -101,8 +101,8 @@ team group (webhook in the `ALERT_WEBHOOK` secret).
 
 ## Gotchas
 
-- **Two GitHub accounts** on this machine: `datnpq` (owns this repo) and `realitechteam`
-  (owns the platform). Push as `datnpq`.
+- **Two GitHub accounts** on this machine: `realitechteam` (owns this repo AND the platform)
+  and `datnpq` (personal, not used for this project). Push as `realitechteam`.
 - **VR STEAM is excluded (NDA)** — never re-add the `screenrecording-*` clips to the public
   repo. Their raw/optimized files stay local in `videos/_private/` (gitignored).
 - **Intro trim:** `optimize.mjs` skips the first 5s (old partner-logo intro). Per-clip
