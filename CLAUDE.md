@@ -107,6 +107,33 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
 - `assets/media/` are intro-trimmed preview loops copied from `previews/`.
 - Deploy any page: `cd <folder> && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`
 
+## Promotion portal + shared DB — portal.realitech.vn (`portal/`)
+
+Self-serve portal for partners & affiliates, on **Cloudflare D1** (shared "promotion" DB,
+decoupled from the platform MongoDB). Worker `realitech-portal`, server-rendered HTML + D1.
+
+- **D1 `realitech-promo`** (id `dbfb2724-01fd-4c21-9998-fed75f95fc50`), schema in
+  `portal/schema.sql`: `accounts` (partner|affiliate|admin, status, ref_code,
+  commission_rate, discount_rate), `referrals` (lead + stage + deal_value + commission,
+  `account_id` = referrer), `events` (ads/showcase promo events).
+- **Flows:** affiliate signup → **auto-active** + ref code → dashboard. partner signup →
+  **pending** → admin approves (sets commission/discount) → active. Login = signed
+  session cookie (`rt_portal`, HMAC `SESSION_SECRET`). Passwords = PBKDF2 (Web Crypto).
+- **Pages:** `/login`, `/signup?type=affiliate|partner`, `/dashboard` (referrals + stage +
+  commission/discount + share links), `/admin` (approve partners, move pipeline → auto
+  commission = deal_value × rate).
+- **`POST /api/referral`** (public, CORS): landing pages write referrals here (with `?ref`
+  attribution to an account) AND it forwards a copy to `api.realitech.vn/leads` (cpn).
+  Wiring: `ads/` Book Demo → `/api/referral` (source `ads`); `partner/` & `affiliate/`
+  CTAs → `portal.realitech.vn/signup?type=…` (via `window.RT.signupUrl`).
+- **Secrets** (`portal/.secrets.local`, gitignored): `SESSION_SECRET`, `BOOTSTRAP_SECRET`,
+  plus admin login (partner@realitech.dev). First admin created once via
+  `POST /api/admin/bootstrap` (header `X-Bootstrap: <BOOTSTRAP_SECRET>`).
+- Deploy: `cd portal && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`.
+  Migrate schema: `npx wrangler d1 execute realitech-promo --remote --file schema.sql`.
+
+> Not yet wired: showcase access events → D1 `events` (still in the gate Worker's KV).
+
 ## Operations
 
 ```bash
