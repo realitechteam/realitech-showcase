@@ -86,24 +86,26 @@ npx wrangler secret put ACCESS_PASSWORD     # change master code
 npx wrangler secret put TOKEN_SECRET        # rotate to force all sessions to re-login
 ```
 
-## Ads landing — ads.realitech.vn (`ads/`)
+## Marketing landing pages — ads / partner / affiliate
 
-A **public** paid-ads marketing landing page (Descript-style: hero + framed video, client
-logos, feature cards, Book Demo CTA). Separate from the gated showcase. Lives in `ads/`:
-```
-ads/public/   index.html, styles.css, app.js, assets/ (logo, client logos, preview media)
-ads/wrangler.jsonc   Workers-static-assets config → custom domain ads.realitech.vn
-```
-- Same platform design tokens (Be Vietnam Pro + cyan). The framed-video look is `.frame`.
-- **Book Demo** posts to `https://api.realitech.vn/leads` with `source:"ads"` and captures
-  **UTM params** (utm_source/campaign/term/gclid…) into the lead's `needs`/`demo_project`
-  for ad attribution → visible in cpn.realitech.vn/leads.
-- Served by a **second Cloudflare Worker `realitech-ads`** (static assets, no code), NOT
-  GitHub Pages (Pages allows only one custom domain per repo). Deploy:
-  ```bash
-  cd ads && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy
-  ```
-  Media in `ads/public/assets/media/` are intro-trimmed preview loops copied from `previews/`.
+**Public** growth-funnel landing pages. Each is its own subdomain + Cloudflare Worker
+(static assets, no code), all sharing the platform design system (Be Vietnam Pro + cyan,
+Descript-style hero + framed video `.frame`), all feeding leads into cpn.realitech.vn with a
+distinct `source`. NOT on GitHub Pages (Pages allows only one custom domain per repo).
+
+| Folder | Domain | Worker | Lead `source` | Audience |
+|---|---|---|---|---|
+| `ads/` | ads.realitech.vn | realitech-ads | `ads` | paid traffic |
+| `partner/` | partner.realitech.vn | realitech-partner | `partner` | agencies / resellers / SIs |
+| `affiliate/` | affiliate.realitech.vn | realitech-affiliate | `affiliate` | referrers / creators |
+
+Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/wrangler.jsonc`.
+- **Leads** POST to `https://api.realitech.vn/leads` with the page's `source` + **UTM capture**
+  (utm_source/campaign/term/gclid → `needs`/`demo_project`) for attribution in cpn.
+- `partner/` & `affiliate/` share a generic `app.js` driven by `window.RT` (source + form copy)
+  set in their index.html. `ads/` has its own app.js (video feature cards).
+- `assets/media/` are intro-trimmed preview loops copied from `previews/`.
+- Deploy any page: `cd <folder> && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`
 
 ## Operations
 
