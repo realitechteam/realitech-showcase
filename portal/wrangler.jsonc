@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "realitech-portal",
+  "main": "src/index.js",
+  "compatibility_date": "2026-06-01",
+  "observability": { "enabled": true },
+  "routes": [{ "pattern": "portal.realitech.vn", "custom_domain": true }],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "realitech-promo", "database_id": "dbfb2724-01fd-4c21-9998-fed75f95fc50" }
+  ],
+  "vars": {
+    "CPN_LEADS_URL": "https://api.realitech.vn/leads",
+    "ALLOWED_ORIGINS": "https://ads.realitech.vn,https://partner.realitech.vn,https://affiliate.realitech.vn,https://showcase.realitech.vn"
+  }
+  // Secrets (set via wrangler secret put):
+  //   SESSION_SECRET    HMAC key for session cookies
+  //   BOOTSTRAP_SECRET  one-time key to create the first admin via /api/admin/bootstrap
+}

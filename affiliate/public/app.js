@@ -37,6 +37,7 @@
       r.map(function (x) { return '<option value="' + esc(x[0]) + '">' + esc(x[1]) + '</option>'; }).join("") + '</select>';
   }
   function openLead() {
+    if (RT.signupUrl) { location.href = RT.signupUrl; return; }
     leadBody.innerHTML =
       '<p class="lead__eyebrow">[ ' + esc(RT.eyebrow || "Apply") + ' ]</p>' +
       '<h3 class="lead__title">' + esc(RT.formTitle || "Get in touch") + '</h3>' +

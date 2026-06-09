@@ -5,3 +5,5 @@ videos/
 worker/.secrets.local
 worker/.dev.vars
 .wrangler/
+portal/.secrets.local
+portal/.dev.vars

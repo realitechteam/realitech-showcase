@@ -1,7 +1,7 @@
 /* REALITECH ads landing — feature cards, Book Demo → cpn Leads (source: ads) + UTM capture */
 (function () {
   "use strict";
-  var LEADS_API = "https://api.realitech.vn/leads";
+  var LEADS_API = "https://portal.realitech.vn/api/referral";  // promo DB (forwards to cpn)
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var esc = function (s) { return String(s).replace(/[<>&"]/g, function (c) { return ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]; }); };
 
@@ -14,6 +14,7 @@
     return out;
   }
   var AD = adContext();
+  var REF = new URLSearchParams(location.search).get("ref") || "";
   function adSummary() {
     return Object.keys(AD).map(function (k) { return k + "=" + AD[k]; }).join(" · ");
   }
@@ -106,6 +107,8 @@
       needs: needs,
       demo_project: AD.utm_campaignname || AD.utm_campaign || AD.utm_term || "ads",
       source: "ads",
+      ref: REF,
+      utm: ad,
     };
     var btn = $("#leadSubmit"); btn.disabled = true; btn.textContent = "Sending…";
     fetch(LEADS_API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
