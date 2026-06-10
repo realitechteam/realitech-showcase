@@ -104,6 +104,13 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   (utm_source/campaign/term/gclid → `needs`/`demo_project`) for attribution in cpn.
 - `partner/` & `affiliate/` share a generic `app.js` driven by `window.RT` (source + form copy)
   set in their index.html. `ads/` has its own app.js (video feature cards).
+- `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
+  magicblocks.ai/partner-program): hero with concrete numbers (20% partner margin /
+  10% affiliate commission — same values as the portal account defaults, keep in sync),
+  two-track comparison cards, how-it-works steps, industry use cases, FAQ (`<details>`
+  accordion), and "Sign in to the portal" links. All CTAs (`data-book`) redirect to
+  `portal.realitech.vn/signup?type=…`; the two styles.css files are identical — edit
+  one, `cp` to the other.
 - `assets/media/` are intro-trimmed preview loops copied from `previews/`.
 - Deploy any page: `cd <folder> && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`
 
@@ -115,13 +122,15 @@ decoupled from the platform MongoDB). Worker `realitech-portal`, server-rendered
 - **D1 `realitech-promo`** (id `dbfb2724-01fd-4c21-9998-fed75f95fc50`), schema in
   `portal/schema.sql`: `accounts` (partner|affiliate|admin, status, ref_code,
   commission_rate, discount_rate), `referrals` (lead + stage + deal_value + commission,
-  `account_id` = referrer), `events` (ads/showcase promo events).
+  `account_id` = referrer), `payouts` (account_id, amount, period, method, note),
+  `events` (ads/showcase promo events).
 - **Flows:** affiliate signup → **auto-active** + ref code → dashboard. partner signup →
   **pending** → admin approves (sets commission/discount) → active. Login = signed
   session cookie (`rt_portal`, HMAC `SESSION_SECRET`). Passwords = PBKDF2 (Web Crypto).
 - **Pages:** `/login`, `/signup?type=affiliate|partner`, `/dashboard` (referrals + stage +
-  commission/discount + share links), `/admin` (approve partners, move pipeline → auto
-  commission = deal_value × rate).
+  commission/discount + share links + earned/paid/balance stats + payout history),
+  `/admin` (approve partners, move pipeline → auto commission = deal_value × rate,
+  record payouts per account via `POST /admin/payout`).
 - **`POST /api/referral`** (public, CORS): landing pages write referrals here (with `?ref`
   attribution to an account) AND it forwards a copy to `api.realitech.vn/leads` (cpn).
   Wiring: `ads/` Book Demo → `/api/referral` (source `ads`); `partner/` & `affiliate/`

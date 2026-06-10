@@ -38,6 +38,16 @@ CREATE TABLE IF NOT EXISTS referrals (
   updated_at        TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS payouts (
+  id          TEXT PRIMARY KEY,
+  account_id  TEXT NOT NULL,
+  amount      REAL NOT NULL DEFAULT 0,
+  period      TEXT,                               -- e.g. '2026-06'
+  method      TEXT DEFAULT 'bank',                -- bank | momo | other
+  note        TEXT DEFAULT '',
+  created_at  TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS events (
   id          TEXT PRIMARY KEY,
   type        TEXT NOT NULL,                      -- ad_click | showcase_access | ...
@@ -51,3 +61,4 @@ CREATE INDEX IF NOT EXISTS idx_ref_account ON referrals(account_id);
 CREATE INDEX IF NOT EXISTS idx_ref_stage   ON referrals(stage);
 CREATE INDEX IF NOT EXISTS idx_ref_source  ON referrals(source);
 CREATE INDEX IF NOT EXISTS idx_acc_type    ON accounts(type, status);
+CREATE INDEX IF NOT EXISTS idx_payout_acc  ON payouts(account_id);

@@ -4,8 +4,9 @@
  *
  * - Affiliate signup -> auto-active account + referral code.
  * - Partner signup   -> pending; REALITECH admin approves (sets commission/discount).
- * - Dashboard: my referrals + stage + commission/discount + share links.
- * - Admin: approve partners, update referral stage / deal value (auto commission).
+ * - Dashboard: my referrals + stage + commission/discount + share links + payout history.
+ * - Admin: approve partners, update referral stage / deal value (auto commission),
+ *   record payouts per account (earned / paid / balance).
  * - POST /api/referral: landing pages (ads/partner/affiliate/showcase) write here
  *   (shared promo DB) and it forwards a copy to the platform leads API (cpn).
  *
@@ -105,9 +106,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cyan)}
 .btn-p{background:var(--cyan);color:var(--onc);border-color:var(--cyan)}.btn-p:hover{background:var(--cyan2)}
 .btn-sm{padding:.4em .8em;font-size:.8rem}
 .card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:var(--r);padding:22px}
-.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:880px){.g5{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
-.stat .n{font-size:1.9rem;font-weight:800;color:var(--cyan);letter-spacing:-.02em}
+.stat .n{font-size:clamp(1.1rem,1.8vw,1.9rem);font-weight:800;color:var(--cyan);letter-spacing:-.02em;overflow-wrap:anywhere}
 .stat .l{font-family:"JetBrains Mono",monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 table{width:100%;border-collapse:collapse;font-size:.88rem}
 th{text-align:left;font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);padding:10px 10px;border-bottom:1px solid var(--line)}
@@ -173,7 +175,7 @@ function pendingPage() {
     <a class="btn" href="/login">Back to login</a></div>`);
 }
 
-function dashboardPage(acc, refs, totals) {
+function dashboardPage(acc, refs, totals, payouts) {
   const links = ["ads", "partner", "affiliate"].map((s) => `https://${s}.realitech.vn/?ref=${acc.ref_code}`);
   const rateLabel = acc.type === "affiliate" ? "Commission rate" : "Reseller discount";
   const rateVal = acc.type === "affiliate" ? pct(acc.commission_rate) : pct(acc.discount_rate);
@@ -185,24 +187,47 @@ function dashboardPage(acc, refs, totals) {
       <td>${r.commission_amount ? money(r.commission_amount) : "—"}</td>
       <td class="muted mono" style="font-size:.75rem">${(r.created_at || "").slice(0, 10)}</td></tr>`).join("")
     : `<tr><td colspan="6" class="muted" style="padding:24px;text-align:center">No referrals yet. Share your link below to get started.</td></tr>`;
+  const payRows = payouts.length ? payouts.map((p) => `<tr>
+      <td class="mono" style="font-size:.8rem">${esc(p.period || (p.created_at || "").slice(0, 7))}</td>
+      <td>${money(p.amount)}</td>
+      <td>${esc(p.method || "bank")}</td>
+      <td class="muted">${esc(p.note || "")}</td>
+      <td class="muted mono" style="font-size:.75rem">${(p.created_at || "").slice(0, 10)}</td></tr>`).join("")
+    : `<tr><td colspan="5" class="muted" style="padding:18px;text-align:center">No payouts yet — commission is paid out monthly once a referred deal is won.</td></tr>`;
   return page("Dashboard", `<div class="wrap">
-    <h1>Welcome, ${esc(acc.name)}</h1><p class="sub">Your ${esc(acc.type)} dashboard · status <span class="${acc.status}">${acc.status}</span></p>
-    <div class="grid g4" style="margin-bottom:22px">
+    <h1>Welcome, ${esc(acc.name)}</h1><p class="sub">Your ${esc(acc.type)} dashboard · ${rateLabel.toLowerCase()} <b>${rateVal}</b> · status <span class="${acc.status}">${acc.status}</span></p>
+    <div class="grid g5" style="margin-bottom:22px">
       <div class="card stat"><div class="n">${totals.count}</div><div class="l">Referrals</div></div>
       <div class="card stat"><div class="n">${totals.won}</div><div class="l">Won</div></div>
       <div class="card stat"><div class="n">${money(totals.earned)}</div><div class="l">Commission earned</div></div>
-      <div class="card stat"><div class="n">${rateVal}</div><div class="l">${rateLabel}</div></div>
+      <div class="card stat"><div class="n">${money(totals.paid)}</div><div class="l">Paid out</div></div>
+      <div class="card stat"><div class="n">${money(totals.earned - totals.paid)}</div><div class="l">Balance due</div></div>
     </div>
     <div class="card" style="margin-bottom:22px"><h2>Your referral link</h2>
       <p class="muted" style="font-size:.85rem;margin-bottom:12px">Share any of these — anyone who books a demo through your link is attributed to you. Your code: <b class="mono">${acc.ref_code}</b></p>
       ${links.map((l) => `<div class="copy" style="margin:6px 8px 6px 0"><span>${esc(l)}</span></div>`).join("")}
     </div>
-    <div class="card"><h2>Referrals</h2>
+    <div class="card" style="margin-bottom:22px"><h2>Referrals</h2>
       <table><thead><tr><th>Business</th><th>Stage</th><th>Source</th><th>Deal value</th><th>Commission</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table>
+    </div>
+    <div class="card"><h2>Payout history</h2>
+      <table><thead><tr><th>Period</th><th>Amount</th><th>Method</th><th>Note</th><th>Date</th></tr></thead><tbody>${payRows}</tbody></table>
     </div></div>`, { nav: topnav(acc) });
 }
 
 function adminPage(acc, pending, refs, accounts) {
+  const aRows = accounts.length ? accounts.map((a) => `<tr>
+      <td>${esc(a.name)}<div class="muted" style="font-size:.78rem">${esc(a.email)} · <span class="mono">${esc(a.ref_code || "—")}</span></div></td>
+      <td>${esc(a.type)}<div class="muted" style="font-size:.74rem">${a.type === "affiliate" ? pct(a.commission_rate) + " comm" : pct(a.discount_rate) + " disc"}</div></td>
+      <td>${money(a.earned)}</td>
+      <td>${money(a.paid)}</td>
+      <td><b>${money(a.earned - a.paid)}</b></td>
+      <td><form class="inline" method="POST" action="/admin/payout"><input type="hidden" name="id" value="${a.id}"/>
+        <input name="amount" type="number" step="1000" min="0" placeholder="amount" style="width:110px" required/>
+        <input name="period" placeholder="2026-06" style="width:80px"/>
+        <input name="note" placeholder="note" style="width:110px"/>
+        <button class="btn btn-p btn-sm" type="submit">Record payout</button></form></td></tr>`).join("")
+    : `<tr><td colspan="6" class="muted" style="padding:18px;text-align:center">No active accounts yet.</td></tr>`;
   const pRows = pending.length ? pending.map((p) => `<tr>
       <td>${esc(p.name)}<div class="muted" style="font-size:.78rem">${esc(p.email)} · ${esc(p.phone || "")}</div>${p.company ? `<div class="muted" style="font-size:.78rem">${esc(p.company)}</div>` : ""}</td>
       <td>${esc(p.type)}</td>
@@ -224,6 +249,8 @@ function adminPage(acc, pending, refs, accounts) {
     <h1>Admin</h1><p class="sub">Approve partners, set rates, and move referrals through the pipeline.</p>
     <div class="card" style="margin-bottom:22px"><h2>Pending applications (${pending.length})</h2>
       <table><thead><tr><th>Applicant</th><th>Type</th><th>Approve (comm / disc)</th><th></th></tr></thead><tbody>${pRows}</tbody></table></div>
+    <div class="card" style="margin-bottom:22px"><h2>Accounts &amp; payouts (${accounts.length})</h2>
+      <table><thead><tr><th>Account</th><th>Type / rate</th><th>Earned</th><th>Paid</th><th>Balance</th><th>Record payout</th></tr></thead><tbody>${aRows}</tbody></table></div>
     <div class="card"><h2>Referrals (${refs.length})</h2>
       <table><thead><tr><th>Business</th><th>Source</th><th>Stage / deal</th><th>Commission</th></tr></thead><tbody>${rRows}</tbody></table></div>
     </div>`, { nav: topnav(acc) });
@@ -278,8 +305,14 @@ async function showDashboard(env, sess) {
   const acc = await getAccount(env, sess.sub);
   if (!acc) return redirect("/logout");
   const refs = (await env.DB.prepare("SELECT * FROM referrals WHERE account_id=? ORDER BY created_at DESC LIMIT 200").bind(acc.id).all()).results || [];
-  const totals = { count: refs.length, won: refs.filter((r) => r.stage === "won").length, earned: refs.reduce((s, r) => s + (r.stage === "won" ? r.commission_amount || 0 : 0), 0) };
-  return html(dashboardPage(acc, refs, totals));
+  const payouts = (await env.DB.prepare("SELECT * FROM payouts WHERE account_id=? ORDER BY created_at DESC LIMIT 100").bind(acc.id).all()).results || [];
+  const totals = {
+    count: refs.length,
+    won: refs.filter((r) => r.stage === "won").length,
+    earned: refs.reduce((s, r) => s + (r.stage === "won" ? r.commission_amount || 0 : 0), 0),
+    paid: payouts.reduce((s, p) => s + (p.amount || 0), 0),
+  };
+  return html(dashboardPage(acc, refs, totals, payouts));
 }
 
 async function showAdmin(env, sess) {
@@ -287,7 +320,25 @@ async function showAdmin(env, sess) {
   if (!acc || acc.type !== "admin") return new Response("Forbidden", { status: 403 });
   const pending = (await env.DB.prepare("SELECT * FROM accounts WHERE status='pending' ORDER BY created_at DESC").all()).results || [];
   const refs = (await env.DB.prepare(`SELECT r.*, a.name AS ref_name FROM referrals r LEFT JOIN accounts a ON a.id=r.account_id ORDER BY r.created_at DESC LIMIT 300`).all()).results || [];
-  return html(adminPage(acc, pending, refs));
+  const accounts = (await env.DB.prepare(`SELECT a.*,
+      COALESCE((SELECT SUM(r.commission_amount) FROM referrals r WHERE r.account_id=a.id AND r.stage='won'), 0) AS earned,
+      COALESCE((SELECT SUM(p.amount) FROM payouts p WHERE p.account_id=a.id), 0) AS paid
+    FROM accounts a WHERE a.type IN ('partner','affiliate') AND a.status='active' ORDER BY a.created_at DESC LIMIT 300`).all()).results || [];
+  return html(adminPage(acc, pending, refs, accounts));
+}
+
+async function adminPayout(req, env, sess) {
+  const acc = await getAccount(env, sess.sub); if (!acc || acc.type !== "admin") return new Response("Forbidden", { status: 403 });
+  const f = await req.formData();
+  const id = (f.get("id") || "").toString();
+  const amount = Math.max(0, parseFloat(f.get("amount")) || 0);
+  const period = (f.get("period") || "").toString().trim().slice(0, 20);
+  const note = (f.get("note") || "").toString().trim().slice(0, 300);
+  const target = await getAccount(env, id);
+  if (target && amount > 0)
+    await env.DB.prepare("INSERT INTO payouts (id,account_id,amount,period,method,note,created_at) VALUES (?,?,?,?,?,?,?)")
+      .bind(uuid(), id, amount, period || null, "bank", note, now()).run();
+  return redirect("/admin");
 }
 
 async function adminApprove(req, env, sess) {
@@ -390,6 +441,7 @@ export default {
     if (path === "/admin/approve" && req.method === "POST") return adminApprove(req, env, sess);
     if (path === "/admin/reject" && req.method === "POST") return adminReject(req, env, sess);
     if (path === "/admin/referral" && req.method === "POST") return adminReferral(req, env, sess);
+    if (path === "/admin/payout" && req.method === "POST") return adminPayout(req, env, sess);
 
     return new Response("Not found", { status: 404 });
   },

@@ -79,7 +79,11 @@ docs/handoff/                           → handoffs
 
 - 🧹 Delete test leads in **cpn.realitech.vn/leads**: "SMOKE TEST", "ADS TEST", "PORTAL TEST Biz".
 - 🔑 Rotate the old Cloudflare **Global API Key** (was pasted in chat during DNS setup).
-- 💰 Finalize commission/discount numbers (defaults: affiliate 10%, partner 20% — placeholders).
+- 💰 Commission numbers (affiliate 10%, partner 20%) are now **public on the landings**
+  (Magic Blocks-style rework, 2026-06-10) — if rates change, update both index.html files
+  AND the portal defaults together.
+- 🚀 After the landings rework: run `wrangler d1 execute realitech-promo --remote --file
+  portal/schema.sql` (adds `payouts`) and redeploy realitech-partner / -affiliate / -portal.
 - 🔗 Wire **showcase access events → D1 `events`** (currently only in the gate Worker's KV) so
   the promo DB fully covers "ads + showcase" too.
 - 📈 Portal Phase 2: payouts, auto-emails (account approved / referral won), reporting, per-account
