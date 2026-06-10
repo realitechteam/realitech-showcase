@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS accounts (
   password_salt   TEXT NOT NULL,
   status          TEXT NOT NULL DEFAULT 'pending', -- pending | active | suspended
   ref_code        TEXT UNIQUE,
-  commission_rate REAL NOT NULL DEFAULT 0.10,     -- affiliate commission share (0..1)
-  discount_rate   REAL NOT NULL DEFAULT 0.0,      -- partner reseller discount (0..1)
+  commission_rate REAL NOT NULL DEFAULT 0.05,     -- affiliate commission share (base 5%, up to 10%)
+  discount_rate   REAL NOT NULL DEFAULT 0.0,      -- partner reseller discount (default 25%, up to 40%)
   notes           TEXT DEFAULT '',
   created_at      TEXT NOT NULL,
   approved_at     TEXT

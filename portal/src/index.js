@@ -118,6 +118,15 @@ td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
 .st-new{color:#8aa0b3}.st-contacted{color:#d8c45a}.st-qualified{color:var(--cyan)}.st-proposal{color:#c79bf0}.st-won{color:var(--green);border-color:rgba(160,217,17,.4)}.st-lost{color:#ff6b6b}
 .pending{color:#d8c45a}.active{color:var(--green)}.suspended{color:#ff6b6b}
 .copy{display:inline-flex;align-items:center;gap:8px;background:var(--ink3);border:1px solid var(--line2);border-radius:8px;padding:.5em .7em;font-family:"JetBrains Mono",monospace;font-size:.8rem}
+.copybtn{background:var(--cyan);color:var(--onc);border:none;border-radius:6px;padding:.35em .8em;font:600 .72rem "Be Vietnam Pro",sans-serif;cursor:pointer}
+.copybtn:hover{background:var(--cyan2)}
+.ticker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(160,217,17,.08);border:1px solid rgba(160,217,17,.3);border-radius:10px;padding:10px 14px;font-size:.85rem;margin-bottom:18px}
+.ticker span{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.08em;color:var(--green)}
+.ticker b{color:var(--green)}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px}
+.flow__step{background:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:.5em 1em;font-size:.82rem;font-weight:600}
+.flow__arr{color:var(--cyan);font-weight:700}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .err{color:#ff6b6b;font-size:.85rem;margin-top:10px}.ok{color:var(--green);font-size:.85rem;margin-top:10px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .muted{color:var(--muted)}.right{margin-left:auto}
@@ -175,10 +184,18 @@ function pendingPage() {
     <a class="btn" href="/login">Back to login</a></div>`);
 }
 
-function dashboardPage(acc, refs, totals, payouts) {
+const maskName = (s) => { s = String(s || "").trim(); return s ? s.slice(0, 2) + "***" : "—"; };
+
+function dashboardPage(acc, refs, totals, payouts, extras) {
   const links = ["ads", "partner", "affiliate"].map((s) => `https://${s}.realitech.vn/?ref=${acc.ref_code}`);
-  const rateLabel = acc.type === "affiliate" ? "Commission rate" : "Reseller discount";
-  const rateVal = acc.type === "affiliate" ? pct(acc.commission_rate) : pct(acc.discount_rate);
+  const isAff = acc.type === "affiliate";
+  const rateLabel = isAff ? "commission rate" : "reseller discount";
+  const rateVal = isAff ? pct(acc.commission_rate) : pct(acc.discount_rate);
+  const maxRate = isAff ? "10%" : "40%";
+  const conv = totals.count ? Math.round((totals.won / totals.count) * 100) + "%" : "0%";
+  const ticker = extras.ticker
+    ? `<div class="ticker">💸 <span>LATEST COMMISSION:</span> <b>${maskName(extras.ticker.name)}</b> earned <b>+${money(extras.ticker.amt)}</b> <span class="mono">· ${(extras.ticker.updated_at || "").slice(0, 10)}</span></div>`
+    : "";
   const rows = refs.length ? refs.map((r) => `<tr>
       <td>${esc(r.business_name)}<div class="muted" style="font-size:.78rem">${esc(r.email || r.phone || "")}</div></td>
       <td><span class="tag st-${r.stage}">${r.stage}</span></td>
@@ -194,25 +211,51 @@ function dashboardPage(acc, refs, totals, payouts) {
       <td class="muted">${esc(p.note || "")}</td>
       <td class="muted mono" style="font-size:.75rem">${(p.created_at || "").slice(0, 10)}</td></tr>`).join("")
     : `<tr><td colspan="5" class="muted" style="padding:18px;text-align:center">No payouts yet — commission is paid out monthly once a referred deal is won.</td></tr>`;
+  const lbRows = extras.top.length ? extras.top.map((t, i) => `<tr>
+      <td class="mono" style="font-size:.8rem">${i + 1}</td>
+      <td>${maskName(t.name)} <span class="tag" style="margin-left:6px">${esc(t.type)}</span></td>
+      <td>${money(t.earned)}</td></tr>`).join("")
+    : `<tr><td colspan="3" class="muted" style="padding:18px;text-align:center">Be the first on the board — close one deal.</td></tr>`;
   return page("Dashboard", `<div class="wrap">
-    <h1>Welcome, ${esc(acc.name)}</h1><p class="sub">Your ${esc(acc.type)} dashboard · ${rateLabel.toLowerCase()} <b>${rateVal}</b> · status <span class="${acc.status}">${acc.status}</span></p>
-    <div class="grid g5" style="margin-bottom:22px">
-      <div class="card stat"><div class="n">${totals.count}</div><div class="l">Referrals</div></div>
-      <div class="card stat"><div class="n">${totals.won}</div><div class="l">Won</div></div>
-      <div class="card stat"><div class="n">${money(totals.earned)}</div><div class="l">Commission earned</div></div>
-      <div class="card stat"><div class="n">${money(totals.paid)}</div><div class="l">Paid out</div></div>
-      <div class="card stat"><div class="n">${money(totals.earned - totals.paid)}</div><div class="l">Balance due</div></div>
+    ${ticker}
+    <h1>Welcome, ${esc(acc.name)}</h1>
+    <p class="sub">Your ${esc(acc.type)} dashboard · ${rateLabel} <b>${rateVal}</b> · status <span class="${acc.status}">${acc.status}</span></p>
+    <div class="flow">
+      <span class="flow__step">🔗 Share your link</span><span class="flow__arr">»</span>
+      <span class="flow__step">🤝 They book a demo</span><span class="flow__arr">»</span>
+      <span class="flow__step">💰 Earn when it closes</span>
+    </div>
+    <div class="grid g2" style="margin-bottom:22px">
+      <div class="card"><h2>Income overview</h2>
+        <div class="trio">
+          <div class="stat"><div class="n">${money(totals.earned - totals.paid)}</div><div class="l">Balance due</div></div>
+          <div class="stat"><div class="n">${money(totals.pending)}</div><div class="l">Pending pipeline</div></div>
+          <div class="stat"><div class="n">${money(totals.paid)}</div><div class="l">Paid out</div></div>
+        </div>
+        <p class="muted" style="font-size:.78rem;margin-top:12px">Payouts run monthly by bank transfer once a deal is marked won. Pending = open deals × your rate.</p></div>
+      <div class="card"><h2>Performance</h2>
+        <div class="trio">
+          <div class="stat"><div class="n">${totals.count}</div><div class="l">Referrals</div></div>
+          <div class="stat"><div class="n">${totals.won}</div><div class="l">Won</div></div>
+          <div class="stat"><div class="n">${conv}</div><div class="l">Conversion</div></div>
+        </div>
+        <p class="muted" style="font-size:.78rem;margin-top:12px">Your ${rateLabel} is <b>${rateVal}</b> — top ${isAff ? "referrers" : "partners"} earn up to <b>${maxRate}</b>. Keep closing and ask us for a bump.</p></div>
     </div>
     <div class="card" style="margin-bottom:22px"><h2>Your referral link</h2>
       <p class="muted" style="font-size:.85rem;margin-bottom:12px">Share any of these — anyone who books a demo through your link is attributed to you. Your code: <b class="mono">${acc.ref_code}</b></p>
-      ${links.map((l) => `<div class="copy" style="margin:6px 8px 6px 0"><span>${esc(l)}</span></div>`).join("")}
+      ${links.map((l) => `<div class="copy" style="margin:6px 8px 6px 0"><span>${esc(l)}</span><button class="copybtn" data-copy="${esc(l)}" type="button">Copy</button></div>`).join("")}
     </div>
     <div class="card" style="margin-bottom:22px"><h2>Referrals</h2>
       <table><thead><tr><th>Business</th><th>Stage</th><th>Source</th><th>Deal value</th><th>Commission</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table>
     </div>
-    <div class="card"><h2>Payout history</h2>
-      <table><thead><tr><th>Period</th><th>Amount</th><th>Method</th><th>Note</th><th>Date</th></tr></thead><tbody>${payRows}</tbody></table>
-    </div></div>`, { nav: topnav(acc) });
+    <div class="grid g2">
+      <div class="card"><h2>Payout history</h2>
+        <table><thead><tr><th>Period</th><th>Amount</th><th>Method</th><th>Note</th><th>Date</th></tr></thead><tbody>${payRows}</tbody></table></div>
+      <div class="card"><h2>Top earners</h2>
+        <table><thead><tr><th>#</th><th>Name</th><th>Earned</th></tr></thead><tbody>${lbRows}</tbody></table></div>
+    </div></div>
+    <script>document.addEventListener("click",function(e){var b=e.target.closest("[data-copy]");if(!b)return;navigator.clipboard.writeText(b.getAttribute("data-copy")).then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent="Copy"},1500)})})</script>`,
+    { nav: topnav(acc) });
 }
 
 function adminPage(acc, pending, refs, accounts) {
@@ -275,8 +318,8 @@ async function doSignup(req, env, url) {
   const id = uuid();
   const active = type === "affiliate";
   const code = active ? refCode() : null;
-  const commission = type === "affiliate" ? 0.1 : 0.0;
-  const discount = type === "partner" ? 0.2 : 0.0;
+  const commission = type === "affiliate" ? 0.05 : 0.0; // base 5%, admin can raise to 10%
+  const discount = type === "partner" ? 0.25 : 0.0;      // default 25%, admin can raise to 40%
   await env.DB.prepare(
     `INSERT INTO accounts (id,type,name,email,phone,company,password_hash,password_salt,status,ref_code,commission_rate,discount_rate,created_at,approved_at)
      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
@@ -306,13 +349,19 @@ async function showDashboard(env, sess) {
   if (!acc) return redirect("/logout");
   const refs = (await env.DB.prepare("SELECT * FROM referrals WHERE account_id=? ORDER BY created_at DESC LIMIT 200").bind(acc.id).all()).results || [];
   const payouts = (await env.DB.prepare("SELECT * FROM payouts WHERE account_id=? ORDER BY created_at DESC LIMIT 100").bind(acc.id).all()).results || [];
+  const rate = acc.commission_rate || 0;
   const totals = {
     count: refs.length,
     won: refs.filter((r) => r.stage === "won").length,
     earned: refs.reduce((s, r) => s + (r.stage === "won" ? r.commission_amount || 0 : 0), 0),
     paid: payouts.reduce((s, p) => s + (p.amount || 0), 0),
+    pending: refs.reduce((s, r) => s + (["won", "lost"].includes(r.stage) ? 0 : (r.deal_value || 0) * rate), 0),
   };
-  return html(dashboardPage(acc, refs, totals, payouts));
+  const ticker = await env.DB.prepare(
+    "SELECT r.commission_amount AS amt, r.updated_at, a.name FROM referrals r JOIN accounts a ON a.id=r.account_id WHERE r.stage='won' AND r.commission_amount>0 ORDER BY r.updated_at DESC LIMIT 1").first();
+  const top = (await env.DB.prepare(
+    "SELECT a.name, a.type, SUM(r.commission_amount) AS earned FROM referrals r JOIN accounts a ON a.id=r.account_id WHERE r.stage='won' AND r.commission_amount>0 GROUP BY a.id ORDER BY earned DESC LIMIT 5").all()).results || [];
+  return html(dashboardPage(acc, refs, totals, payouts, { ticker, top }));
 }
 
 async function showAdmin(env, sess) {

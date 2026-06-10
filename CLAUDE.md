@@ -105,8 +105,9 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
 - `partner/` & `affiliate/` share a generic `app.js` driven by `window.RT` (source + form copy)
   set in their index.html. `ads/` has its own app.js (video feature cards).
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
-  magicblocks.ai/partner-program): hero with concrete numbers (20% partner margin /
-  10% affiliate commission — same values as the portal account defaults, keep in sync),
+  magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
+  default up to 40% / affiliate commission 5% base up to 10% — the base values are the
+  portal signup defaults, keep in sync),
   two-track comparison cards, how-it-works steps, industry use cases, FAQ (`<details>`
   accordion), and "Sign in to the portal" links. All CTAs (`data-book`) redirect to
   `portal.realitech.vn/signup?type=…`; the two styles.css files are identical — edit
