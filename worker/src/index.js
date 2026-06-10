@@ -13,7 +13,7 @@
  *   GET  /api/verify?t=<token>               -> { ok }
  *   GET  /v/<slug>.mp4?t=<token>             -> gated video stream (range)
  *
- * Bindings:  VIDEOS (R2), LEADS (KV), EMAIL (send_email)
+ * Bindings:  VIDEOS (R2), LEADS (KV), DB (D1 realitech-promo), EMAIL (send_email)
  * Secrets:   ACCESS_PASSWORD, TOKEN_SECRET
  * Vars:      LEAD_TO, LEAD_FROM, ALLOWED_ORIGINS
  */
@@ -104,6 +104,14 @@ async function resolveCode(env, code) {
 async function recordAccess(env, info) {
   if (env.LEADS) {
     try { await env.LEADS.put(`access:${Date.now()}:${info.code}`, JSON.stringify(info), { expirationTtl: 60 * 60 * 24 * 180 }); } catch {}
+  }
+  // Mirror into the shared promo DB so cpn/portal reporting covers showcase too.
+  if (env.DB) {
+    try {
+      await env.DB.prepare(
+        "INSERT INTO events (id, type, account_id, source, meta, created_at) VALUES (?, 'showcase_access', NULL, 'showcase', ?, ?)"
+      ).bind(crypto.randomUUID(), JSON.stringify({ client: info.client, code: info.code, ip: info.ip, geo: info.geo, ua: info.ua }), info.ts).run();
+    } catch {}
   }
   const day = new Date().toISOString().slice(0, 10);
   let firstToday = true;

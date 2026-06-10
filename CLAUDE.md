@@ -132,7 +132,8 @@ decoupled from the platform MongoDB). Worker `realitech-portal`, server-rendered
 - Deploy: `cd portal && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`.
   Migrate schema: `npx wrangler d1 execute realitech-promo --remote --file schema.sql`.
 
-> Not yet wired: showcase access events → D1 `events` (still in the gate Worker's KV).
+> Showcase access events are mirrored into D1 `events` (type `showcase_access`) by the gate
+> Worker (`DB` binding in `worker/wrangler.jsonc`) in addition to its KV log.
 
 ## Operations
 

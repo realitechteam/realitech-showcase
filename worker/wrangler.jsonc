@@ -19,6 +19,11 @@
     { "binding": "LEADS", "id": "9a9b94da77b3441894cf0269908f5e42" }
   ],
 
+  // Shared promotion DB (same D1 as the portal) — showcase access events land in `events`.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "realitech-promo", "database_id": "dbfb2724-01fd-4c21-9998-fed75f95fc50" }
+  ],
+
   "vars": {
     "LEAD_TO": "partner@realitech.dev",
     "LEAD_FROM": "alerts@realitech.vn",
