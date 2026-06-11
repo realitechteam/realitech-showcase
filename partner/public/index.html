@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REALITECH Partner Program — two ways to partner, earn on every deal</title>
-  <meta name="description" content="Partner with REALITECH: resell and deliver AR/VR/3D experiences with a 25–40% partner margin, or refer deals as an affiliate for 5–10% commission. Self-serve portal with live tracking." />
+  <title data-en="REALITECH Partner Program — two ways to partner, earn on every deal">Chương trình Đối tác REALITECH — hai cách hợp tác, có thu nhập trên mọi hợp đồng</title>
+  <meta name="description" content="Hợp tác cùng REALITECH: bán lại và triển khai trải nghiệm AR/VR/3D với biên lợi nhuận đối tác 25–40%, hoặc giới thiệu khách hàng nhận hoa hồng 5–10%. Portal tự phục vụ, theo dõi trực tiếp." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <meta name="theme-color" content="#07090c" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="REALITECH Partner Program" />
-  <meta property="og:description" content="Two ways to partner. Earn on every deal — 25–40% partner margin or 5–10% affiliate commission. Portal included." />
+  <meta property="og:title" content="Chương trình Đối tác REALITECH" />
+  <meta property="og:description" content="Hai cách hợp tác. Có thu nhập trên mọi hợp đồng — biên đối tác 25–40% hoặc hoa hồng affiliate 5–10%. Kèm portal." />
   <meta property="og:url" content="https://partner.realitech.vn" />
   <meta property="og:image" content="https://partner.realitech.vn/assets/og-realitech.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script>
+    (function () { var t; try { t = localStorage.getItem("rt_theme"); } catch (e) {}
+      document.documentElement.setAttribute("data-theme", t || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")); })();
     window.RT = {
       source: "partner", eyebrow: "Partner program",
       signupUrl: "https://portal.realitech.vn/signup?type=partner",
@@ -29,26 +31,30 @@
   <div class="atmos" aria-hidden="true"><div class="atmos__glow"></div><div class="atmos__grain"></div></div>
 
   <header class="nav" id="nav">
-    <a class="nav__brand" href="#top"><img class="nav__logo" src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
+    <a class="nav__brand" href="#top"><img class="nav__logo" data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
     <nav class="nav__links" aria-label="Sections">
-      <a href="#tracks">Programs</a><a href="#how">How it works</a><a href="#cases">Use cases</a><a href="#faq">FAQ</a>
-      <a href="https://portal.realitech.vn/login" class="nav__signin">Sign in</a>
+      <a href="#tracks" data-en="Programs">Chương trình</a><a href="#how" data-en="How it works">Cách hoạt động</a><a href="#cases" data-en="Use cases">Ứng dụng</a><a href="#faq" data-en="FAQ">Hỏi đáp</a>
+      <a href="https://portal.realitech.vn/login" class="nav__signin" data-en="Sign in">Đăng nhập</a>
     </nav>
-    <button class="btn btn--primary" data-book>Apply as partner</button>
+    <div class="nav__right">
+      <button class="navctl" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      <button class="navctl" id="themeBtn" type="button" aria-label="Switch theme">☀️</button>
+      <button class="btn btn--primary" data-book data-en="Apply as partner">Đăng ký đối tác</button>
+    </div>
   </header>
 
   <!-- hero -->
   <section class="hero" id="top">
     <div class="hero__copy">
-      <p class="eyebrow"><span class="dot dot--live"></span> REALITECH Partner Program</p>
-      <h1 class="hero__title">Two ways to partner. <em>Earn on every deal.</em></h1>
-      <p class="hero__sub">Resell and deliver AR/VR/3D experiences for your clients at a <strong>25% partner margin — up to 40%</strong> as you scale — or simply refer businesses and earn a <strong>5–10% commission</strong> on every closed deal. Real projects in production. Full support.</p>
+      <p class="eyebrow"><span class="dot dot--live"></span> <span data-en="REALITECH Partner Program">Chương trình Đối tác REALITECH</span></p>
+      <h1 class="hero__title" data-en="Two ways to partner. <em>Earn on every deal.</em>">Hai cách hợp tác. <em>Có thu nhập trên mọi hợp đồng.</em></h1>
+      <p class="hero__sub" data-en="Resell and deliver AR/VR/3D experiences for your clients at a <strong>25% partner margin — up to 40%</strong> as you scale — or simply refer businesses and earn a <strong>5–10% commission</strong> on every closed deal. Real projects in production. Full support.">Bán lại và triển khai trải nghiệm AR/VR/3D cho khách hàng của bạn với <strong>biên lợi nhuận đối tác 25% — lên tới 40%</strong> khi mở rộng — hoặc đơn giản là giới thiệu doanh nghiệp và nhận <strong>hoa hồng 5–10%</strong> trên mỗi hợp đồng chốt thành công. Dự án thật đang vận hành. Hỗ trợ đầy đủ.</p>
       <div class="hero__cta">
-        <button class="btn btn--primary btn--lg" data-book>Apply as a partner →</button>
-        <a class="btn btn--ghost btn--lg" href="#tracks">Compare programs ↓</a>
+        <button class="btn btn--primary btn--lg" data-book data-en="Apply as a partner →">Đăng ký làm đối tác →</button>
+        <a class="btn btn--ghost btn--lg" href="#tracks" data-en="Compare programs ↓">So sánh hai chương trình ↓</a>
       </div>
-      <p class="hero__trust"><span>★★★★★</span> 33+ delivered builds · in-house spatial engine</p>
-      <p class="hero__signin">Already a partner? <a href="https://portal.realitech.vn/login">Sign in to the portal →</a></p>
+      <p class="hero__trust"><span>★★★★★</span> <span data-en="33+ delivered builds · in-house spatial engine">33+ dự án đã bàn giao · engine không gian tự phát triển</span></p>
+      <p class="hero__signin" data-en="Already a partner? <a href=&quot;https://portal.realitech.vn/login&quot;>Sign in to the portal →</a>">Đã là đối tác? <a href="https://portal.realitech.vn/login">Đăng nhập portal →</a></p>
     </div>
     <div class="frame frame--hero">
       <div class="frame__bar"><span class="frame__dots"><i></i><i></i><i></i></span><span class="frame__title">realitech · partner deck</span><span class="frame__live"><span class="dot dot--live"></span> LIVE</span></div>
@@ -58,7 +64,7 @@
 
   <!-- proof -->
   <section class="proof">
-    <p class="proof__h">Experiences we've shipped for</p>
+    <p class="proof__h" data-en="Experiences we've shipped for">Chúng tôi đã làm trải nghiệm cho</p>
     <div class="proof__logos">
       <img src="assets/clients/mazda.svg" alt="Mazda" /><img src="assets/clients/lamborghini.svg" alt="Lamborghini" />
       <img src="assets/clients/samsung.svg" alt="Samsung" /><img src="assets/clients/vinhomes.png" alt="Vinhomes" /><img src="assets/clients/dksh.png" alt="DKSH" />
@@ -67,37 +73,37 @@
 
   <!-- two tracks -->
   <section class="section" id="tracks">
-    <div class="section__head"><p class="eyebrow">[ Programs ]</p><h2 class="section__title">Pick your track — or run both</h2><p class="section__sub">Both tracks come with the same self-serve portal: live attribution, deal stages, commission status and payout history.</p></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ Programs ]">[ Chương trình ]</p><h2 class="section__title" data-en="Pick your track — or run both">Chọn hướng phù hợp — hoặc chạy cả hai</h2><p class="section__sub" data-en="Both tracks come with the same self-serve portal: live attribution, deal stages, commission status and payout history.">Cả hai chương trình dùng chung một portal tự phục vụ: ghi nhận nguồn giới thiệu, trạng thái hợp đồng, hoa hồng và lịch sử thanh toán — tất cả theo thời gian thực.</p></div>
     <div class="tracks">
       <div class="track track--main reveal">
-        <p class="track__tag">Partner · agencies, resellers, integrators</p>
-        <div class="track__rate">25–40%<span> partner margin</span></div>
-        <p class="track__line">You own the client and your project fee — your number. Start at a 25% reseller margin; grow to 40% with certification and volume.</p>
+        <p class="track__tag" data-en="Partner · agencies, resellers, integrators">Đối tác · agency, reseller, tích hợp hệ thống</p>
+        <div class="track__rate">25–40%<span data-en=" partner margin"> biên lợi nhuận đối tác</span></div>
+        <p class="track__line" data-en="You own the client and your project fee — your number. Start at a 25% reseller margin; grow to 40% with certification and volume.">Bạn sở hữu khách hàng và phí dự án của riêng mình — con số do bạn quyết. Khởi điểm biên 25%; tăng lên 40% theo chứng nhận và doanh số.</p>
         <ul class="track__feats">
-          <li>Your project fee on top — you bill the client</li>
-          <li>Deal registration — your pipeline stays yours</li>
-          <li>Certification on RealitechEditor included</li>
-          <li>Direct line to the engineering team</li>
-          <li>Co-branded decks &amp; demo assets</li>
+          <li data-en="Your project fee on top — you bill the client">Phí dự án cộng thêm — bạn báo giá khách hàng</li>
+          <li data-en="Deal registration — your pipeline stays yours">Đăng ký deal — pipeline luôn là của bạn</li>
+          <li data-en="Certification on RealitechEditor included">Bao gồm chứng nhận RealitechEditor</li>
+          <li data-en="Direct line to the engineering team">Liên hệ trực tiếp đội ngũ kỹ thuật</li>
+          <li data-en="Co-branded decks &amp; demo assets">Tài liệu bán hàng &amp; demo đồng thương hiệu</li>
         </ul>
         <div class="track__cta">
-          <button class="btn btn--primary" data-book>Apply to the Partner Program →</button>
-          <span class="track__note">Reviewed by hand · reply within a business day</span>
+          <button class="btn btn--primary" data-book data-en="Apply to the Partner Program →">Đăng ký Chương trình Đối tác →</button>
+          <span class="track__note" data-en="Reviewed by hand · reply within a business day">Duyệt thủ công · phản hồi trong 1 ngày làm việc</span>
         </div>
       </div>
       <div class="track reveal">
-        <p class="track__tag">Affiliate · creators, consultants, freelancers</p>
-        <div class="track__rate">5–10%<span> per closed deal</span></div>
-        <p class="track__line">Send us a qualified introduction and earn 5% of the deal when it closes — up to 10% for consistent referrers. e.g. one ₫300,000,000 project = <strong>₫15,000,000+</strong> to you.</p>
+        <p class="track__tag" data-en="Affiliate · creators, consultants, freelancers">Affiliate · creator, tư vấn, freelancer</p>
+        <div class="track__rate">5–10%<span data-en=" per closed deal"> mỗi hợp đồng chốt</span></div>
+        <p class="track__line" data-en="Send us a qualified introduction and earn 5% of the deal when it closes — up to 10% for consistent referrers. e.g. one ₫300,000,000 project = <strong>₫15,000,000+</strong> to you.">Giới thiệu khách hàng tiềm năng và nhận 5% giá trị hợp đồng khi chốt — lên tới 10% nếu giới thiệu đều đặn. VD: 1 dự án ₫300.000.000 = <strong>₫15.000.000+</strong> cho bạn.</p>
         <ul class="track__feats">
-          <li>Instant account — referral link in 1 minute</li>
-          <li>Attribution via your ?ref code on any page</li>
-          <li>Track stages &amp; commission live in the portal</li>
-          <li>No quota, no fees, no exclusivity</li>
+          <li data-en="Instant account — referral link in 1 minute">Tài khoản tức thì — có link giới thiệu sau 1 phút</li>
+          <li data-en="Attribution via your ?ref code on any page">Ghi nhận qua mã ?ref của bạn trên mọi trang</li>
+          <li data-en="Track stages &amp; commission live in the portal">Theo dõi trạng thái &amp; hoa hồng trực tiếp trên portal</li>
+          <li data-en="No quota, no fees, no exclusivity">Không chỉ tiêu, không phí, không độc quyền</li>
         </ul>
         <div class="track__cta">
-          <a class="btn btn--ghost" href="https://portal.realitech.vn/signup?type=affiliate">Join the Affiliate Program →</a>
-          <span class="track__note">Details at <a href="https://affiliate.realitech.vn">affiliate.realitech.vn</a></span>
+          <a class="btn btn--ghost" href="https://portal.realitech.vn/signup?type=affiliate" data-en="Join the Affiliate Program →">Tham gia Chương trình Affiliate →</a>
+          <span class="track__note" data-en="Details at <a href=&quot;https://affiliate.realitech.vn&quot;>affiliate.realitech.vn</a>">Chi tiết tại <a href="https://affiliate.realitech.vn">affiliate.realitech.vn</a></span>
         </div>
       </div>
     </div>
@@ -105,72 +111,72 @@
 
   <!-- how it works -->
   <section class="section" id="how">
-    <div class="section__head"><p class="eyebrow">[ How it works ]</p><h2 class="section__title">From application to recurring revenue</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ How it works ]">[ Cách hoạt động ]</p><h2 class="section__title" data-en="From application to recurring revenue">Từ đăng ký đến doanh thu lặp lại</h2></div>
     <div class="steps">
-      <div class="step reveal"><div class="step__n">01</div><h3 class="step__title">Apply + onboard</h3><p class="step__line">Quick form. We review for fit and reply within a business day.</p></div>
-      <div class="step reveal"><div class="step__n">02</div><h3 class="step__title">Get certified</h3><p class="step__line">Your team gets trained on RealitechEditor and our delivery playbook.</p></div>
-      <div class="step reveal"><div class="step__n">03</div><h3 class="step__title">Deliver for clients</h3><p class="step__line">You bill the client your project fee; we power the build at partner pricing.</p></div>
-      <div class="step reveal"><div class="step__n">04</div><h3 class="step__title">Earn &amp; repeat</h3><p class="step__line">25–40% margin on every deal, tracked in your portal — registered deals stay yours.</p></div>
+      <div class="step reveal"><div class="step__n">01</div><h3 class="step__title" data-en="Apply + onboard">Đăng ký + onboard</h3><p class="step__line" data-en="Quick form. We review for fit and reply within a business day.">Form nhanh gọn. Chúng tôi xét duyệt và phản hồi trong 1 ngày làm việc.</p></div>
+      <div class="step reveal"><div class="step__n">02</div><h3 class="step__title" data-en="Get certified">Nhận chứng nhận</h3><p class="step__line" data-en="Your team gets trained on RealitechEditor and our delivery playbook.">Đội của bạn được đào tạo RealitechEditor và quy trình triển khai của chúng tôi.</p></div>
+      <div class="step reveal"><div class="step__n">03</div><h3 class="step__title" data-en="Deliver for clients">Triển khai cho khách</h3><p class="step__line" data-en="You bill the client your project fee; we power the build at partner pricing.">Bạn báo giá khách hàng phí dự án; chúng tôi cung cấp bản build theo giá đối tác.</p></div>
+      <div class="step reveal"><div class="step__n">04</div><h3 class="step__title" data-en="Earn &amp; repeat">Nhận &amp; lặp lại</h3><p class="step__line" data-en="25–40% margin on every deal, tracked in your portal — registered deals stay yours.">Biên 25–40% trên mỗi hợp đồng, theo dõi trên portal — deal đã đăng ký luôn là của bạn.</p></div>
     </div>
   </section>
 
   <!-- use cases -->
   <section class="section" id="cases">
-    <div class="section__head"><p class="eyebrow">[ Use cases ]</p><h2 class="section__title">What partners sell with us</h2><p class="section__sub">Patterns taken from builds we've already delivered — your clients get production-proven work, not experiments.</p></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ Use cases ]">[ Ứng dụng ]</p><h2 class="section__title" data-en="What partners sell with us">Đối tác bán gì cùng chúng tôi</h2><p class="section__sub" data-en="Patterns taken from builds we've already delivered — your clients get production-proven work, not experiments.">Các mô hình rút từ những dự án đã bàn giao — khách của bạn nhận sản phẩm đã được chứng minh thực tế, không phải thử nghiệm.</p></div>
     <div class="grid grid--3">
-      <div class="tcard reveal"><span class="tcard__tag">Real estate &amp; smart building</span><h3 class="tcard__title">Digital-twin sales galleries</h3><p class="tcard__line">Interactive 3D masterplans and building twins for developers and operators — the Vinhomes-class pitch that closes off-plan sales.</p><p class="tcard__fine">You sell the gallery + content retainer; we power the twin.</p></div>
-      <div class="tcard reveal"><span class="tcard__tag">Automotive retail</span><h3 class="tcard__title">AR / VR car configurators</h3><p class="tcard__line">Showroom-grade configurators and launch experiences like the ones we shipped for Mazda and Lamborghini activations.</p><p class="tcard__fine">You sell the launch campaign; we deliver the experience.</p></div>
-      <div class="tcard reveal"><span class="tcard__tag">Brands &amp; retail</span><h3 class="tcard__title">Spatial brand activations</h3><p class="tcard__line">3D product showcases and on-site AR activations for consumer brands — Samsung-class events, webXR included.</p><p class="tcard__fine">You sell the activation; we run it end-to-end with you.</p></div>
+      <div class="tcard reveal"><span class="tcard__tag" data-en="Real estate &amp; smart building">Bất động sản &amp; toà nhà thông minh</span><h3 class="tcard__title" data-en="Digital-twin sales galleries">Sa bàn số digital-twin bán hàng</h3><p class="tcard__line" data-en="Interactive 3D masterplans and building twins for developers and operators — the Vinhomes-class pitch that closes off-plan sales.">Masterplan 3D tương tác và bản sao số toà nhà cho chủ đầu tư, đơn vị vận hành — chuẩn Vinhomes giúp chốt bán hàng hình thành tương lai.</p><p class="tcard__fine" data-en="You sell the gallery + content retainer; we power the twin.">Bạn bán sa bàn + retainer nội dung; chúng tôi vận hành twin.</p></div>
+      <div class="tcard reveal"><span class="tcard__tag" data-en="Automotive retail">Bán lẻ ô tô</span><h3 class="tcard__title" data-en="AR / VR car configurators">Cấu hình xe AR / VR</h3><p class="tcard__line" data-en="Showroom-grade configurators and launch experiences like the ones we shipped for Mazda and Lamborghini activations.">Trình cấu hình chuẩn showroom và trải nghiệm ra mắt như các activation chúng tôi đã làm cho Mazda, Lamborghini.</p><p class="tcard__fine" data-en="You sell the launch campaign; we deliver the experience.">Bạn bán chiến dịch ra mắt; chúng tôi triển khai trải nghiệm.</p></div>
+      <div class="tcard reveal"><span class="tcard__tag" data-en="Brands &amp; retail">Thương hiệu &amp; bán lẻ</span><h3 class="tcard__title" data-en="Spatial brand activations">Activation không gian cho thương hiệu</h3><p class="tcard__line" data-en="3D product showcases and on-site AR activations for consumer brands — Samsung-class events, webXR included.">Showcase sản phẩm 3D và AR tại điểm bán cho thương hiệu tiêu dùng — sự kiện chuẩn Samsung, có cả webXR.</p><p class="tcard__fine" data-en="You sell the activation; we run it end-to-end with you.">Bạn bán activation; chúng tôi cùng vận hành trọn gói.</p></div>
     </div>
   </section>
 
   <!-- benefits -->
   <section class="section" id="benefits">
-    <div class="section__head"><p class="eyebrow">[ Why REALITECH ]</p><h2 class="section__title">Our engine. Your reach.</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ Why REALITECH ]">[ Vì sao REALITECH ]</p><h2 class="section__title" data-en="Our engine. Your reach.">Engine của chúng tôi. Mạng lưới của bạn.</h2></div>
     <div class="grid grid--3">
-      <div class="tcard reveal"><span class="tcard__ico">💰</span><h3 class="tcard__title">Protected margins &amp; deal reg</h3><p class="tcard__line">25–40% partner margin, registered deals, no channel conflict — we don't go direct to your registered clients.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">📊</span><h3 class="tcard__title">Portal with real numbers</h3><p class="tcard__line">Attribution, deal stages, commission status and payout history — live at portal.realitech.vn.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">🎓</span><h3 class="tcard__title">Training &amp; certification</h3><p class="tcard__line">Get your team certified on RealitechEditor to deliver on your own.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">⚡</span><h3 class="tcard__title">Priority engineering</h3><p class="tcard__line">Direct line to the team that builds the engine when it matters.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">🧱</span><h3 class="tcard__title">In-house engine</h3><p class="tcard__line">No black box, no subcontracting the hard part — deeper customization.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">🚀</span><h3 class="tcard__title">Fast onboarding</h3><p class="tcard__line">From application to first co-sell in weeks, not quarters.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">💰</span><h3 class="tcard__title" data-en="Protected margins &amp; deal reg">Biên được bảo vệ &amp; đăng ký deal</h3><p class="tcard__line" data-en="25–40% partner margin, registered deals, no channel conflict — we don't go direct to your registered clients.">Biên đối tác 25–40%, deal được đăng ký, không xung đột kênh — chúng tôi không tiếp cận trực tiếp khách hàng bạn đã đăng ký.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">📊</span><h3 class="tcard__title" data-en="Portal with real numbers">Portal với số liệu thật</h3><p class="tcard__line" data-en="Attribution, deal stages, commission status and payout history — live at portal.realitech.vn.">Ghi nhận nguồn, trạng thái hợp đồng, hoa hồng và lịch sử thanh toán — trực tiếp tại portal.realitech.vn.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🎓</span><h3 class="tcard__title" data-en="Training &amp; certification">Đào tạo &amp; chứng nhận</h3><p class="tcard__line" data-en="Get your team certified on RealitechEditor to deliver on your own.">Đội của bạn được chứng nhận RealitechEditor để tự chủ triển khai.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">⚡</span><h3 class="tcard__title" data-en="Priority engineering">Kỹ thuật ưu tiên</h3><p class="tcard__line" data-en="Direct line to the team that builds the engine when it matters.">Kết nối thẳng với đội ngũ xây dựng engine khi bạn cần nhất.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🧱</span><h3 class="tcard__title" data-en="In-house engine">Engine tự phát triển</h3><p class="tcard__line" data-en="No black box, no subcontracting the hard part — deeper customization.">Không hộp đen, không thuê ngoài phần khó — tuỳ biến sâu hơn.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🚀</span><h3 class="tcard__title" data-en="Fast onboarding">Onboard nhanh</h3><p class="tcard__line" data-en="From application to first co-sell in weeks, not quarters.">Từ đăng ký đến thương vụ co-sell đầu tiên trong vài tuần, không phải vài quý.</p></div>
     </div>
   </section>
 
   <section class="stats">
-    <div class="stat"><span class="stat__num">25–40%</span><span class="stat__label">Partner margin</span></div>
-    <div class="stat"><span class="stat__num">5–10%</span><span class="stat__label">Affiliate commission</span></div>
-    <div class="stat"><span class="stat__num">33+</span><span class="stat__label">Builds to resell</span></div>
-    <div class="stat"><span class="stat__num">1 day</span><span class="stat__label">Application review</span></div>
+    <div class="stat"><span class="stat__num">25–40%</span><span class="stat__label" data-en="Partner margin">Biên đối tác</span></div>
+    <div class="stat"><span class="stat__num">5–10%</span><span class="stat__label" data-en="Affiliate commission">Hoa hồng affiliate</span></div>
+    <div class="stat"><span class="stat__num">33+</span><span class="stat__label" data-en="Builds to resell">Dự án sẵn bán lại</span></div>
+    <div class="stat"><span class="stat__num" data-en="1 day">1 ngày</span><span class="stat__label" data-en="Application review">Thời gian xét duyệt</span></div>
   </section>
 
   <!-- FAQ -->
   <section class="section" id="faq">
-    <div class="section__head"><p class="eyebrow">[ FAQ ]</p><h2 class="section__title">Questions, answered straight</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ FAQ ]">[ Hỏi đáp ]</p><h2 class="section__title" data-en="Questions, answered straight">Hỏi thẳng, đáp thật</h2></div>
     <div class="faq">
-      <details class="faq__item reveal"><summary>How do I track my deals and commission?</summary><p>Every partner gets a portal account at <a href="https://portal.realitech.vn">portal.realitech.vn</a>: referral attribution, deal stages (new → won), commission per deal, and full payout history.</p></details>
-      <details class="faq__item reveal"><summary>How does the partner margin work?</summary><p>You quote and bill your client your own project fee. REALITECH supplies the build at partner pricing — starting 25% under list, rising to 40% with certification and deal volume — and that margin is yours, on top of whatever services you charge around it.</p></details>
-      <details class="faq__item reveal"><summary>When do I get paid?</summary><p>Commission is confirmed when a deal is marked <em>won</em> in the portal. Payouts run monthly by bank transfer, and every payout is recorded in your portal history.</p></details>
-      <details class="faq__item reveal"><summary>Can I run both partner and affiliate tracks?</summary><p>Yes. Some partners also keep an affiliate link for referrals outside their delivery scope. The accounts are separate and both show in the same portal.</p></details>
-      <details class="faq__item reveal"><summary>What does it cost to join?</summary><p>Nothing. No application fee, no quota, no exclusivity. Partner applications are reviewed by hand for fit — usually within a business day.</p></details>
-      <details class="faq__item reveal"><summary>Do you compete with your partners?</summary><p>No. Registered deals are protected — we don't go direct to your registered clients while you're an active partner.</p></details>
-      <details class="faq__item reveal"><summary>What support do partners get?</summary><p>Certification on RealitechEditor, co-branded sales decks, demo assets from 33+ delivered builds, and a direct line to our engineering team for pre-sales and delivery.</p></details>
-      <details class="faq__item reveal"><summary>How fast can we start selling?</summary><p>Typical path: apply this week, certify the next, co-sell within weeks — not quarters. Your first pitch can lean on our showcase and team.</p></details>
+      <details class="faq__item reveal"><summary data-en="How do I track my deals and commission?">Tôi theo dõi hợp đồng và hoa hồng thế nào?</summary><p data-en="Every partner gets a portal account at <a href=&quot;https://portal.realitech.vn&quot;>portal.realitech.vn</a>: referral attribution, deal stages (new → won), commission per deal, and full payout history.">Mỗi đối tác có tài khoản portal tại <a href="https://portal.realitech.vn">portal.realitech.vn</a>: ghi nhận nguồn giới thiệu, trạng thái hợp đồng (mới → thắng), hoa hồng từng deal và toàn bộ lịch sử thanh toán.</p></details>
+      <details class="faq__item reveal"><summary data-en="How does the partner margin work?">Biên lợi nhuận đối tác hoạt động ra sao?</summary><p data-en="You quote and bill your client your own project fee. REALITECH supplies the build at partner pricing — starting 25% under list, rising to 40% with certification and deal volume — and that margin is yours, on top of whatever services you charge around it.">Bạn tự báo giá và thu phí dự án từ khách hàng của mình. REALITECH cung cấp bản build theo giá đối tác — thấp hơn giá niêm yết 25%, lên tới 40% theo chứng nhận và doanh số — phần biên đó là của bạn, cộng thêm mọi dịch vụ bạn bán kèm.</p></details>
+      <details class="faq__item reveal"><summary data-en="When do I get paid?">Khi nào tôi được thanh toán?</summary><p data-en="Commission is confirmed when a deal is marked <em>won</em> in the portal. Payouts run monthly by bank transfer, and every payout is recorded in your portal history.">Hoa hồng được xác nhận khi hợp đồng chuyển sang trạng thái <em>thắng</em> trên portal. Thanh toán hằng tháng qua chuyển khoản, và mỗi lần thanh toán đều được ghi vào lịch sử portal của bạn.</p></details>
+      <details class="faq__item reveal"><summary data-en="Can I run both partner and affiliate tracks?">Tôi có thể chạy cả đối tác lẫn affiliate không?</summary><p data-en="Yes. Some partners also keep an affiliate link for referrals outside their delivery scope. The accounts are separate and both show in the same portal.">Được. Nhiều đối tác vẫn giữ link affiliate cho các giới thiệu ngoài phạm vi triển khai. Hai tài khoản tách biệt và đều hiển thị trên cùng một portal.</p></details>
+      <details class="faq__item reveal"><summary data-en="What does it cost to join?">Tham gia tốn phí không?</summary><p data-en="Nothing. No application fee, no quota, no exclusivity. Partner applications are reviewed by hand for fit — usually within a business day.">Hoàn toàn miễn phí. Không phí đăng ký, không chỉ tiêu, không độc quyền. Hồ sơ đối tác được duyệt thủ công — thường trong 1 ngày làm việc.</p></details>
+      <details class="faq__item reveal"><summary data-en="Do you compete with your partners?">REALITECH có cạnh tranh với đối tác không?</summary><p data-en="No. Registered deals are protected — we don't go direct to your registered clients while you're an active partner.">Không. Deal đã đăng ký được bảo vệ — chúng tôi không tiếp cận trực tiếp khách hàng bạn đã đăng ký khi bạn còn là đối tác hoạt động.</p></details>
+      <details class="faq__item reveal"><summary data-en="What support do partners get?">Đối tác được hỗ trợ những gì?</summary><p data-en="Certification on RealitechEditor, co-branded sales decks, demo assets from 33+ delivered builds, and a direct line to our engineering team for pre-sales and delivery.">Chứng nhận RealitechEditor, tài liệu bán hàng đồng thương hiệu, demo từ 33+ dự án đã bàn giao, và kết nối thẳng đội kỹ thuật cho cả pre-sales lẫn triển khai.</p></details>
+      <details class="faq__item reveal"><summary data-en="How fast can we start selling?">Bao lâu thì bắt đầu bán được?</summary><p data-en="Typical path: apply this week, certify the next, co-sell within weeks — not quarters. Your first pitch can lean on our showcase and team.">Lộ trình điển hình: đăng ký tuần này, chứng nhận tuần sau, co-sell trong vài tuần — không phải vài quý. Buổi pitch đầu tiên có thể dựa hoàn toàn vào showcase và đội ngũ của chúng tôi.</p></details>
     </div>
   </section>
 
   <section class="final" id="contact">
-    <h2 class="final__title">Let's build the spatial web <em>together</em>.</h2>
-    <p class="final__sub">Two ways in — pick the one that fits today. You can always add the other later.</p>
+    <h2 class="final__title" data-en="Let's build the spatial web <em>together</em>.">Cùng nhau xây <em>spatial web</em>.</h2>
+    <p class="final__sub" data-en="Two ways in — pick the one that fits today. You can always add the other later.">Hai cách tham gia — chọn hướng phù hợp hôm nay. Hướng còn lại có thể bổ sung bất cứ lúc nào.</p>
     <div class="final__cta">
-      <button class="btn btn--primary btn--lg" data-book>Apply: Partner →</button>
-      <a class="btn btn--ghost btn--lg" href="https://portal.realitech.vn/signup?type=affiliate">Join: Affiliate →</a>
+      <button class="btn btn--primary btn--lg" data-book data-en="Apply: Partner →">Đăng ký: Đối tác →</button>
+      <a class="btn btn--ghost btn--lg" href="https://portal.realitech.vn/signup?type=affiliate" data-en="Join: Affiliate →">Tham gia: Affiliate →</a>
     </div>
-    <p class="final__fine">Already a partner? <a href="https://portal.realitech.vn/login">Sign in to the portal</a> · partner@realitech.dev</p>
+    <p class="final__fine" data-en="Already a partner? <a href=&quot;https://portal.realitech.vn/login&quot;>Sign in to the portal</a> · partner@realitech.dev">Đã là đối tác? <a href="https://portal.realitech.vn/login">Đăng nhập portal</a> · partner@realitech.dev</p>
   </section>
 
   <footer class="foot">
-    <span class="foot__brand"><img src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
+    <span class="foot__brand"><img data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
     <span class="foot__mid">Reality, engineered.</span>
     <a href="https://realitech.vn">realitech.vn</a>
   </footer>

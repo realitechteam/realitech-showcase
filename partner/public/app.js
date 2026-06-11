@@ -84,8 +84,35 @@
     $("#leadOk").addEventListener("click", closeLead);
   }
 
+  /* ---------- theme (dark default · light mirrors realitech.vn) ---------- */
+  function applyTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    [].slice.call(document.querySelectorAll("img[data-logo]")).forEach(function (im) {
+      im.src = "assets/logo-realitech-" + (t === "light" ? "color" : "white") + ".png";
+    });
+    var b = $("#themeBtn"); if (b) b.textContent = t === "light" ? "🌙" : "☀️";
+    try { localStorage.setItem("rt_theme", t); } catch (e) {}
+  }
+
+  /* ---------- language (vi default · en via data-en attributes) ---------- */
+  function setLang(l) {
+    document.documentElement.lang = l;
+    [].slice.call(document.querySelectorAll("[data-en]")).forEach(function (n) {
+      if (n.__vi == null) n.__vi = n.innerHTML;
+      n.innerHTML = l === "en" ? n.getAttribute("data-en") : n.__vi;
+    });
+    var b = $("#langBtn"); if (b) b.textContent = l === "en" ? "VI" : "EN";
+    try { localStorage.setItem("rt_lang", l); } catch (e) {}
+  }
+
   /* ---------- wire ---------- */
   wireReveal(); wireVideos();
+  var savedTheme; try { savedTheme = localStorage.getItem("rt_theme"); } catch (e) {}
+  applyTheme(savedTheme || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+  var savedLang; try { savedLang = localStorage.getItem("rt_lang"); } catch (e) {}
+  setLang(savedLang === "en" ? "en" : "vi");
+  var tBtn = $("#themeBtn"); if (tBtn) tBtn.addEventListener("click", function () { applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"); });
+  var lBtn = $("#langBtn"); if (lBtn) lBtn.addEventListener("click", function () { setLang(document.documentElement.lang === "en" ? "vi" : "en"); });
   [].slice.call(document.querySelectorAll("[data-book]")).forEach(function (b) { b.addEventListener("click", openLead); });
   $("#leadClose").addEventListener("click", closeLead);
   leadModal.addEventListener("click", function (e) { if (e.target === leadModal) closeLead(); });

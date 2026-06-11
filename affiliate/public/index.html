@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REALITECH Affiliate Program — earn up to 10% per closed deal</title>
-  <meta name="description" content="Refer businesses to REALITECH and earn 5–10% commission on every closed deal. Instant signup, referral link in 1 minute, live tracking in your own portal." />
+  <title data-en="REALITECH Affiliate Program — earn up to 10% per closed deal">Chương trình Affiliate REALITECH — nhận tới 10% mỗi hợp đồng chốt</title>
+  <meta name="description" content="Giới thiệu doanh nghiệp cho REALITECH và nhận hoa hồng 5–10% trên mỗi hợp đồng chốt thành công. Đăng ký tức thì, có link sau 1 phút, theo dõi trực tiếp trên portal riêng." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <meta name="theme-color" content="#07090c" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="REALITECH Affiliate Program" />
-  <meta property="og:description" content="Refer brands to REALITECH. Earn 5–10% on every closed deal — tracked live in your portal." />
+  <meta property="og:title" content="Chương trình Affiliate REALITECH" />
+  <meta property="og:description" content="Giới thiệu thương hiệu cho REALITECH. Nhận 5–10% mỗi hợp đồng chốt — theo dõi trực tiếp trên portal." />
   <meta property="og:url" content="https://affiliate.realitech.vn" />
   <meta property="og:image" content="https://affiliate.realitech.vn/assets/og-realitech.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script>
+    (function () { var t; try { t = localStorage.getItem("rt_theme"); } catch (e) {}
+      document.documentElement.setAttribute("data-theme", t || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")); })();
     window.RT = {
       source: "affiliate", eyebrow: "Affiliate program",
       signupUrl: "https://portal.realitech.vn/signup?type=affiliate",
@@ -29,26 +31,30 @@
   <div class="atmos" aria-hidden="true"><div class="atmos__glow"></div><div class="atmos__grain"></div></div>
 
   <header class="nav" id="nav">
-    <a class="nav__brand" href="#top"><img class="nav__logo" src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
+    <a class="nav__brand" href="#top"><img class="nav__logo" data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
     <nav class="nav__links" aria-label="Sections">
-      <a href="#tracks">Programs</a><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#faq">FAQ</a>
-      <a href="https://portal.realitech.vn/login" class="nav__signin">Sign in</a>
+      <a href="#tracks" data-en="Programs">Chương trình</a><a href="#how" data-en="How it works">Cách hoạt động</a><a href="#who" data-en="Who it's for">Dành cho ai</a><a href="#faq" data-en="FAQ">Hỏi đáp</a>
+      <a href="https://portal.realitech.vn/login" class="nav__signin" data-en="Sign in">Đăng nhập</a>
     </nav>
-    <button class="btn btn--primary" data-book>Get my referral link</button>
+    <div class="nav__right">
+      <button class="navctl" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      <button class="navctl" id="themeBtn" type="button" aria-label="Switch theme">☀️</button>
+      <button class="btn btn--primary" data-book data-en="Get my referral link">Lấy link giới thiệu</button>
+    </div>
   </header>
 
   <!-- hero -->
   <section class="hero" id="top">
     <div class="hero__copy">
-      <p class="eyebrow"><span class="dot dot--live"></span> REALITECH Affiliate Program</p>
-      <h1 class="hero__title">Refer brands. Earn <em>up to 10% per deal.</em></h1>
-      <p class="hero__sub">Know a business that should be in 3D? Introduce them to REALITECH and earn <strong>5% of every closed deal — up to 10%</strong> for consistent referrers. e.g. one ₫300,000,000 project pays you <strong>₫15,000,000+</strong>. Instant account, link in a minute, tracked live.</p>
+      <p class="eyebrow"><span class="dot dot--live"></span> <span data-en="REALITECH Affiliate Program">Chương trình Affiliate REALITECH</span></p>
+      <h1 class="hero__title" data-en="Refer brands. Earn <em>up to 10% per deal.</em>">Giới thiệu thương hiệu. Nhận <em>tới 10% mỗi hợp đồng.</em></h1>
+      <p class="hero__sub" data-en="Know a business that should be in 3D? Introduce them to REALITECH and earn <strong>5% of every closed deal — up to 10%</strong> for consistent referrers. e.g. one ₫300,000,000 project pays you <strong>₫15,000,000+</strong>. Instant account, link in a minute, tracked live.">Biết doanh nghiệp nào nên lên 3D? Giới thiệu họ cho REALITECH và nhận <strong>5% mỗi hợp đồng chốt — lên tới 10%</strong> nếu giới thiệu đều đặn. VD: 1 dự án ₫300.000.000 mang về cho bạn <strong>₫15.000.000+</strong>. Tài khoản tức thì, có link sau 1 phút, theo dõi trực tiếp.</p>
       <div class="hero__cta">
-        <button class="btn btn--primary btn--lg" data-book>Get my referral link →</button>
-        <a class="btn btn--ghost btn--lg" href="#how">How it works ↓</a>
+        <button class="btn btn--primary btn--lg" data-book data-en="Get my referral link →">Lấy link giới thiệu →</button>
+        <a class="btn btn--ghost btn--lg" href="#how" data-en="How it works ↓">Cách hoạt động ↓</a>
       </div>
-      <p class="hero__trust"><span>★★★★★</span> Live tracking · paid on closed deals · no fees</p>
-      <p class="hero__signin">Already an affiliate? <a href="https://portal.realitech.vn/login">Sign in to the portal →</a></p>
+      <p class="hero__trust"><span>★★★★★</span> <span data-en="Live tracking · paid on closed deals · no fees">Theo dõi trực tiếp · trả khi chốt deal · không phí</span></p>
+      <p class="hero__signin" data-en="Already an affiliate? <a href=&quot;https://portal.realitech.vn/login&quot;>Sign in to the portal →</a>">Đã là affiliate? <a href="https://portal.realitech.vn/login">Đăng nhập portal →</a></p>
     </div>
     <div class="frame frame--hero">
       <div class="frame__bar"><span class="frame__dots"><i></i><i></i><i></i></span><span class="frame__title">realitech · what you'll refer</span><span class="frame__live"><span class="dot dot--live"></span> LIVE</span></div>
@@ -58,7 +64,7 @@
 
   <!-- proof -->
   <section class="proof">
-    <p class="proof__h">Your referrals join brands like</p>
+    <p class="proof__h" data-en="Your referrals join brands like">Khách bạn giới thiệu sẽ đứng cạnh các thương hiệu</p>
     <div class="proof__logos">
       <img src="assets/clients/mazda.svg" alt="Mazda" /><img src="assets/clients/lamborghini.svg" alt="Lamborghini" />
       <img src="assets/clients/samsung.svg" alt="Samsung" /><img src="assets/clients/vinhomes.png" alt="Vinhomes" /><img src="assets/clients/dksh.png" alt="DKSH" />
@@ -67,67 +73,67 @@
 
   <!-- how it works -->
   <section class="section" id="how">
-    <div class="section__head"><p class="eyebrow">[ How it works ]</p><h2 class="section__title">Three steps to your first payout</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ How it works ]">[ Cách hoạt động ]</p><h2 class="section__title" data-en="Three steps to your first payout">Ba bước đến khoản hoa hồng đầu tiên</h2></div>
     <div class="steps" style="grid-template-columns:repeat(3,1fr)">
-      <div class="step reveal"><div class="step__n">01</div><h3 class="step__title">Create your account</h3><p class="step__line">Instant signup at the portal — your unique referral link and code are ready in a minute.</p></div>
-      <div class="step reveal"><div class="step__n">02</div><h3 class="step__title">Introduce a business</h3><p class="step__line">Share your link, or just send your code with an intro. Every lead that books through it is attributed to you.</p></div>
-      <div class="step reveal"><div class="step__n">03</div><h3 class="step__title">Earn when it closes</h3><p class="step__line">Watch the deal move new → won in your dashboard. When it's won, 5% of the deal value is yours — up to 10% as you refer more.</p></div>
+      <div class="step reveal"><div class="step__n">01</div><h3 class="step__title" data-en="Create your account">Tạo tài khoản</h3><p class="step__line" data-en="Instant signup at the portal — your unique referral link and code are ready in a minute.">Đăng ký tức thì trên portal — link và mã giới thiệu riêng của bạn sẵn sàng sau 1 phút.</p></div>
+      <div class="step reveal"><div class="step__n">02</div><h3 class="step__title" data-en="Introduce a business">Giới thiệu doanh nghiệp</h3><p class="step__line" data-en="Share your link, or just send your code with an intro. Every lead that books through it is attributed to you.">Chia sẻ link, hoặc gửi kèm mã khi giới thiệu. Mọi lead đặt demo qua đó đều được ghi nhận cho bạn.</p></div>
+      <div class="step reveal"><div class="step__n">03</div><h3 class="step__title" data-en="Earn when it closes">Nhận tiền khi chốt</h3><p class="step__line" data-en="Watch the deal move new → won in your dashboard. When it's won, 5% of the deal value is yours — up to 10% as you refer more.">Theo dõi deal chuyển từ mới → thắng trên dashboard. Khi chốt, 5% giá trị hợp đồng là của bạn — lên tới 10% khi giới thiệu nhiều hơn.</p></div>
     </div>
   </section>
 
   <!-- earnings -->
   <section class="section" id="rewards">
-    <div class="section__head"><p class="eyebrow">[ The numbers ]</p><h2 class="section__title">Real numbers, not promises</h2><p class="section__sub">Commission is calculated on the actual deal value and visible in your portal the moment a deal is won.</p></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ The numbers ]">[ Con số ]</p><h2 class="section__title" data-en="Real numbers, not promises">Số liệu thật, không hứa suông</h2><p class="section__sub" data-en="Commission is calculated on the actual deal value and visible in your portal the moment a deal is won.">Hoa hồng tính trên giá trị hợp đồng thực tế và hiển thị trên portal ngay khi deal được chốt.</p></div>
     <div class="grid grid--3">
-      <div class="tcard tcard--num reveal"><div class="tcard__big">5–10%</div><h3 class="tcard__title">Of every closed deal</h3><p class="tcard__line">5% base on the full project value — consistent referrers get bumped up to 10%. No caps hidden in footnotes.</p></div>
-      <div class="tcard tcard--num reveal"><div class="tcard__big">₫15M+</div><h3 class="tcard__title">From one ₫300M project</h3><p class="tcard__line">Spatial projects are big-ticket. One good introduction can out-earn months of small affiliate links.</p></div>
-      <div class="tcard tcard--num reveal"><div class="tcard__big">1 min</div><h3 class="tcard__title">To get your link</h3><p class="tcard__line">Affiliate accounts are approved instantly — signup, copy your link, send your first intro today.</p></div>
+      <div class="tcard tcard--num reveal"><div class="tcard__big">5–10%</div><h3 class="tcard__title" data-en="Of every closed deal">Trên mỗi hợp đồng chốt</h3><p class="tcard__line" data-en="5% base on the full project value — consistent referrers get bumped up to 10%. No caps hidden in footnotes.">5% cơ bản trên toàn bộ giá trị dự án — giới thiệu đều đặn được nâng lên 10%. Không trần ẩn trong chú thích.</p></div>
+      <div class="tcard tcard--num reveal"><div class="tcard__big">₫15M+</div><h3 class="tcard__title" data-en="From one ₫300M project">Từ một dự án ₫300M</h3><p class="tcard__line" data-en="Spatial projects are big-ticket. One good introduction can out-earn months of small affiliate links.">Dự án không gian là hàng giá trị lớn. Một lời giới thiệu chất lượng có thể hơn nhiều tháng đặt link affiliate lặt vặt.</p></div>
+      <div class="tcard tcard--num reveal"><div class="tcard__big" data-en="1 min">1 phút</div><h3 class="tcard__title" data-en="To get your link">Để có link của bạn</h3><p class="tcard__line" data-en="Affiliate accounts are approved instantly — signup, copy your link, send your first intro today.">Tài khoản affiliate được duyệt tức thì — đăng ký, copy link, gửi lời giới thiệu đầu tiên ngay hôm nay.</p></div>
     </div>
   </section>
 
   <!-- who it's for -->
   <section class="section" id="who">
-    <div class="section__head"><p class="eyebrow">[ Who it's for ]</p><h2 class="section__title">Built for people with reach</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ Who it's for ]">[ Dành cho ai ]</p><h2 class="section__title" data-en="Built for people with reach">Dành cho người có mạng lưới</h2></div>
     <div class="grid grid--4">
-      <div class="tcard reveal"><span class="tcard__ico">🎥</span><h3 class="tcard__title">Creators</h3><p class="tcard__line">Tech, design &amp; business audiences who trust your taste.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">💼</span><h3 class="tcard__title">Consultants</h3><p class="tcard__line">Advisors with clients ready to stand out in 3D.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">🏢</span><h3 class="tcard__title">Agencies</h3><p class="tcard__line">Refer what you don't deliver — or go deeper with the partner track.</p></div>
-      <div class="tcard reveal"><span class="tcard__ico">🧑‍💻</span><h3 class="tcard__title">Freelancers</h3><p class="tcard__line">Turn your network into recurring referral income.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🎥</span><h3 class="tcard__title">Creator</h3><p class="tcard__line" data-en="Tech, design &amp; business audiences who trust your taste.">Khán giả công nghệ, thiết kế &amp; kinh doanh tin vào gu của bạn.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">💼</span><h3 class="tcard__title" data-en="Consultants">Tư vấn</h3><p class="tcard__line" data-en="Advisors with clients ready to stand out in 3D.">Cố vấn có sẵn khách hàng muốn nổi bật bằng 3D.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🏢</span><h3 class="tcard__title">Agency</h3><p class="tcard__line" data-en="Refer what you don't deliver — or go deeper with the partner track.">Giới thiệu phần bạn không triển khai — hoặc đi sâu hơn với chương trình đối tác.</p></div>
+      <div class="tcard reveal"><span class="tcard__ico">🧑‍💻</span><h3 class="tcard__title">Freelancer</h3><p class="tcard__line" data-en="Turn your network into recurring referral income.">Biến mạng lưới quan hệ thành thu nhập giới thiệu đều đặn.</p></div>
     </div>
   </section>
 
   <!-- two tracks -->
   <section class="section" id="tracks">
-    <div class="section__head"><p class="eyebrow">[ Programs ]</p><h2 class="section__title">Two ways to partner — or run both</h2><p class="section__sub">Both tracks share the same portal: live attribution, deal stages, commission status and payout history.</p></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ Programs ]">[ Chương trình ]</p><h2 class="section__title" data-en="Two ways to partner — or run both">Hai cách hợp tác — hoặc chạy cả hai</h2><p class="section__sub" data-en="Both tracks share the same portal: live attribution, deal stages, commission status and payout history.">Cả hai chương trình dùng chung portal: ghi nhận nguồn, trạng thái hợp đồng, hoa hồng và lịch sử thanh toán.</p></div>
     <div class="tracks">
       <div class="track track--main reveal">
-        <p class="track__tag">Affiliate · creators, consultants, freelancers</p>
-        <div class="track__rate">5–10%<span> per closed deal</span></div>
-        <p class="track__line">Refer businesses with your link or code. Earn 5% of every deal that closes — up to 10% as you refer more. No quota, no fees, no exclusivity.</p>
+        <p class="track__tag" data-en="Affiliate · creators, consultants, freelancers">Affiliate · creator, tư vấn, freelancer</p>
+        <div class="track__rate">5–10%<span data-en=" per closed deal"> mỗi hợp đồng chốt</span></div>
+        <p class="track__line" data-en="Refer businesses with your link or code. Earn 5% of every deal that closes — up to 10% as you refer more. No quota, no fees, no exclusivity.">Giới thiệu doanh nghiệp bằng link hoặc mã của bạn. Nhận 5% mỗi hợp đồng chốt — lên tới 10% khi giới thiệu nhiều hơn. Không chỉ tiêu, không phí, không độc quyền.</p>
         <ul class="track__feats">
-          <li>Instant account — referral link in 1 minute</li>
-          <li>Attribution via your ?ref code on any page</li>
-          <li>Track stages &amp; commission live in the portal</li>
-          <li>Monthly payouts, recorded in your history</li>
+          <li data-en="Instant account — referral link in 1 minute">Tài khoản tức thì — có link sau 1 phút</li>
+          <li data-en="Attribution via your ?ref code on any page">Ghi nhận qua mã ?ref của bạn trên mọi trang</li>
+          <li data-en="Track stages &amp; commission live in the portal">Theo dõi trạng thái &amp; hoa hồng trực tiếp trên portal</li>
+          <li data-en="Monthly payouts, recorded in your history">Thanh toán hằng tháng, lưu trong lịch sử của bạn</li>
         </ul>
         <div class="track__cta">
-          <button class="btn btn--primary" data-book>Join the Affiliate Program →</button>
-          <span class="track__note">Free · instant approval</span>
+          <button class="btn btn--primary" data-book data-en="Join the Affiliate Program →">Tham gia Chương trình Affiliate →</button>
+          <span class="track__note" data-en="Free · instant approval">Miễn phí · duyệt tức thì</span>
         </div>
       </div>
       <div class="track reveal">
-        <p class="track__tag">Partner · agencies, resellers, integrators</p>
-        <div class="track__rate">25–40%<span> partner margin</span></div>
-        <p class="track__line">Deliver for your own clients on our engine: your project fee, a 25–40% reseller margin, deal registration and certification.</p>
+        <p class="track__tag" data-en="Partner · agencies, resellers, integrators">Đối tác · agency, reseller, tích hợp hệ thống</p>
+        <div class="track__rate">25–40%<span data-en=" partner margin"> biên lợi nhuận đối tác</span></div>
+        <p class="track__line" data-en="Deliver for your own clients on our engine: your project fee, a 25–40% reseller margin, deal registration and certification.">Triển khai cho khách hàng của chính bạn trên engine của chúng tôi: phí dự án của bạn, biên reseller 25–40%, đăng ký deal và chứng nhận.</p>
         <ul class="track__feats">
-          <li>Your project fee on top — you bill the client</li>
-          <li>Deal registration — your pipeline stays yours</li>
-          <li>Certification on RealitechEditor included</li>
-          <li>Direct line to the engineering team</li>
+          <li data-en="Your project fee on top — you bill the client">Phí dự án cộng thêm — bạn báo giá khách hàng</li>
+          <li data-en="Deal registration — your pipeline stays yours">Đăng ký deal — pipeline luôn là của bạn</li>
+          <li data-en="Certification on RealitechEditor included">Bao gồm chứng nhận RealitechEditor</li>
+          <li data-en="Direct line to the engineering team">Liên hệ trực tiếp đội ngũ kỹ thuật</li>
         </ul>
         <div class="track__cta">
-          <a class="btn btn--ghost" href="https://portal.realitech.vn/signup?type=partner">Apply to the Partner Program →</a>
-          <span class="track__note">Details at <a href="https://partner.realitech.vn">partner.realitech.vn</a></span>
+          <a class="btn btn--ghost" href="https://portal.realitech.vn/signup?type=partner" data-en="Apply to the Partner Program →">Đăng ký Chương trình Đối tác →</a>
+          <span class="track__note" data-en="Details at <a href=&quot;https://partner.realitech.vn&quot;>partner.realitech.vn</a>">Chi tiết tại <a href="https://partner.realitech.vn">partner.realitech.vn</a></span>
         </div>
       </div>
     </div>
@@ -135,31 +141,31 @@
 
   <!-- FAQ -->
   <section class="section" id="faq">
-    <div class="section__head"><p class="eyebrow">[ FAQ ]</p><h2 class="section__title">Questions, answered straight</h2></div>
+    <div class="section__head"><p class="eyebrow" data-en="[ FAQ ]">[ Hỏi đáp ]</p><h2 class="section__title" data-en="Questions, answered straight">Hỏi thẳng, đáp thật</h2></div>
     <div class="faq">
-      <details class="faq__item reveal"><summary>How do I track my referrals?</summary><p>Your dashboard at <a href="https://portal.realitech.vn">portal.realitech.vn</a> shows every referral with attribution, its stage (new → won), the commission on it, and your full payout history.</p></details>
-      <details class="faq__item reveal"><summary>How is a referral attributed to me?</summary><p>Anyone who books a demo through a link carrying your <code>?ref</code> code — on any REALITECH page — is attributed to you. You can also tell us directly when you make a warm intro.</p></details>
-      <details class="faq__item reveal"><summary>When do I get paid?</summary><p>Commission is confirmed when the deal is marked <em>won</em>. Payouts run monthly by bank transfer and every payout is recorded in your portal history.</p></details>
-      <details class="faq__item reveal"><summary>How much can I actually earn?</summary><p>5% of the closed deal value, uncapped — and consistent referrers get raised up to 10%. Spatial projects are big-ticket: a single ₫300,000,000 project pays ₫15,000,000 at the base rate, ₫30,000,000 at the top rate.</p></details>
-      <details class="faq__item reveal"><summary>Does it cost anything?</summary><p>No. Free to join, instant approval, no quota and no exclusivity — you can promote anything else alongside.</p></details>
-      <details class="faq__item reveal"><summary>What if I can also deliver projects?</summary><p>Then look at the <a href="https://partner.realitech.vn">Partner Program</a>: 25–40% reseller margin, deal registration and certification. You can run both tracks at once.</p></details>
-      <details class="faq__item reveal"><summary>What marketing assets do I get?</summary><p>The public showcase, demo videos and case-study pages — everything you need to make a credible intro is linkable from day one.</p></details>
-      <details class="faq__item reveal"><summary>Who do I talk to if I have a question?</summary><p>partner@realitech.dev — a human reads it, usually the same day.</p></details>
+      <details class="faq__item reveal"><summary data-en="How do I track my referrals?">Tôi theo dõi giới thiệu của mình thế nào?</summary><p data-en="Your dashboard at <a href=&quot;https://portal.realitech.vn&quot;>portal.realitech.vn</a> shows every referral with attribution, its stage (new → won), the commission on it, and your full payout history.">Dashboard của bạn tại <a href="https://portal.realitech.vn">portal.realitech.vn</a> hiển thị mọi lượt giới thiệu kèm nguồn, trạng thái (mới → thắng), hoa hồng tương ứng và toàn bộ lịch sử thanh toán.</p></details>
+      <details class="faq__item reveal"><summary data-en="How is a referral attributed to me?">Lượt giới thiệu được ghi nhận cho tôi ra sao?</summary><p data-en="Anyone who books a demo through a link carrying your <code>?ref</code> code — on any REALITECH page — is attributed to you. You can also tell us directly when you make a warm intro.">Bất kỳ ai đặt demo qua link mang mã <code>?ref</code> của bạn — trên mọi trang REALITECH — đều được ghi nhận cho bạn. Bạn cũng có thể báo trực tiếp khi giới thiệu nồng ấm.</p></details>
+      <details class="faq__item reveal"><summary data-en="When do I get paid?">Khi nào tôi được thanh toán?</summary><p data-en="Commission is confirmed when the deal is marked <em>won</em>. Payouts run monthly by bank transfer and every payout is recorded in your portal history.">Hoa hồng được xác nhận khi deal chuyển trạng thái <em>thắng</em>. Thanh toán hằng tháng qua chuyển khoản, mỗi lần đều được lưu trong lịch sử portal.</p></details>
+      <details class="faq__item reveal"><summary data-en="How much can I actually earn?">Thực tế tôi kiếm được bao nhiêu?</summary><p data-en="5% of the closed deal value, uncapped — and consistent referrers get raised up to 10%. Spatial projects are big-ticket: a single ₫300,000,000 project pays ₫15,000,000 at the base rate, ₫30,000,000 at the top rate.">5% giá trị hợp đồng chốt, không giới hạn — giới thiệu đều đặn được nâng lên 10%. Dự án không gian giá trị lớn: chỉ một dự án ₫300.000.000 đã mang về ₫15.000.000 ở mức cơ bản, ₫30.000.000 ở mức cao nhất.</p></details>
+      <details class="faq__item reveal"><summary data-en="Does it cost anything?">Có tốn phí gì không?</summary><p data-en="No. Free to join, instant approval, no quota and no exclusivity — you can promote anything else alongside.">Không. Tham gia miễn phí, duyệt tức thì, không chỉ tiêu, không độc quyền — bạn vẫn quảng bá thứ khác song song thoải mái.</p></details>
+      <details class="faq__item reveal"><summary data-en="What if I can also deliver projects?">Nếu tôi cũng tự triển khai được dự án thì sao?</summary><p data-en="Then look at the <a href=&quot;https://partner.realitech.vn&quot;>Partner Program</a>: 25–40% reseller margin, deal registration and certification. You can run both tracks at once.">Hãy xem <a href="https://partner.realitech.vn">Chương trình Đối tác</a>: biên reseller 25–40%, đăng ký deal và chứng nhận. Bạn có thể chạy cả hai chương trình cùng lúc.</p></details>
+      <details class="faq__item reveal"><summary data-en="What marketing assets do I get?">Tôi được cấp tài liệu marketing gì?</summary><p data-en="The public showcase, demo videos and case-study pages — everything you need to make a credible intro is linkable from day one.">Showcase công khai, video demo và trang case-study — mọi thứ cần cho một lời giới thiệu thuyết phục đều có link sẵn từ ngày đầu.</p></details>
+      <details class="faq__item reveal"><summary data-en="Who do I talk to if I have a question?">Có thắc mắc thì hỏi ai?</summary><p data-en="partner@realitech.dev — a human reads it, usually the same day.">partner@realitech.dev — người thật đọc và trả lời, thường ngay trong ngày.</p></details>
     </div>
   </section>
 
   <section class="final" id="contact">
-    <h2 class="final__title">Start earning with <em>REALITECH</em>.</h2>
-    <p class="final__sub">Your referral link is one minute away. The first intro could be this week's coffee chat.</p>
+    <h2 class="final__title" data-en="Start earning with <em>REALITECH</em>.">Bắt đầu kiếm tiền cùng <em>REALITECH</em>.</h2>
+    <p class="final__sub" data-en="Your referral link is one minute away. The first intro could be this week's coffee chat.">Link giới thiệu của bạn chỉ cách 1 phút. Lời giới thiệu đầu tiên có khi là buổi cà phê tuần này.</p>
     <div class="final__cta">
-      <button class="btn btn--primary btn--lg" data-book>Join: Affiliate →</button>
-      <a class="btn btn--ghost btn--lg" href="https://portal.realitech.vn/signup?type=partner">Apply: Partner →</a>
+      <button class="btn btn--primary btn--lg" data-book data-en="Join: Affiliate →">Tham gia: Affiliate →</button>
+      <a class="btn btn--ghost btn--lg" href="https://portal.realitech.vn/signup?type=partner" data-en="Apply: Partner →">Đăng ký: Đối tác →</a>
     </div>
-    <p class="final__fine">Already an affiliate? <a href="https://portal.realitech.vn/login">Sign in to the portal</a> · partner@realitech.dev</p>
+    <p class="final__fine" data-en="Already an affiliate? <a href=&quot;https://portal.realitech.vn/login&quot;>Sign in to the portal</a> · partner@realitech.dev">Đã là affiliate? <a href="https://portal.realitech.vn/login">Đăng nhập portal</a> · partner@realitech.dev</p>
   </section>
 
   <footer class="foot">
-    <span class="foot__brand"><img src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
+    <span class="foot__brand"><img data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
     <span class="foot__mid">Reality, engineered.</span>
     <a href="https://realitech.vn">realitech.vn</a>
   </footer>
