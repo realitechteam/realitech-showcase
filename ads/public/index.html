@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REALITECH — Turn your product into an experience people step inside</title>
-  <meta name="description" content="REALITECH builds AR, VR and 3D digital-twin experiences for retail, real estate and training — on our own spatial engine. Book a demo and see your brand in immersive 3D." />
+  <title data-en="REALITECH — Turn your product into an experience people step inside">REALITECH — Biến sản phẩm thành trải nghiệm khách hàng bước vào được</title>
+  <meta name="description" content="REALITECH xây dựng trải nghiệm AR, VR và bản sao số 3D cho bán lẻ, bất động sản và đào tạo — trên engine không gian tự phát triển. Đặt demo và xem thương hiệu của bạn trong 3D sống động." />
 
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <meta name="theme-color" content="#07090c" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="REALITECH — Make your product an experience" />
-  <meta property="og:description" content="AR · VR · 3D digital twins for retail, real estate & training. Book a demo." />
+  <meta property="og:title" content="REALITECH — Biến sản phẩm thành trải nghiệm" />
+  <meta property="og:description" content="AR · VR · bản sao số 3D cho bán lẻ, bất động sản & đào tạo. Đặt lịch demo." />
   <meta property="og:url" content="https://ads.realitech.vn" />
   <meta property="og:image" content="https://ads.realitech.vn/assets/og-realitech.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -19,36 +19,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () { var t; try { t = localStorage.getItem("rt_theme"); } catch (e) {}
+      document.documentElement.setAttribute("data-theme", t || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")); })();
+  </script>
 </head>
 <body>
   <div class="atmos" aria-hidden="true"><div class="atmos__glow"></div><div class="atmos__grain"></div></div>
 
   <!-- nav -->
   <header class="nav" id="nav">
-    <a class="nav__brand" href="#top"><img class="nav__logo" src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
+    <a class="nav__brand" href="#top"><img class="nav__logo" data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /></a>
     <nav class="nav__links" aria-label="Sections">
-      <a href="#work">What we build</a>
-      <a href="#why">Why it works</a>
-      <a href="#engine">The engine</a>
+      <a href="#work" data-en="What we build">Chúng tôi xây gì</a>
+      <a href="#why" data-en="Why it works">Vì sao hiệu quả</a>
+      <a href="#engine" data-en="The engine">Engine</a>
     </nav>
-    <button class="btn btn--primary" data-book>Book a demo</button>
+    <div class="nav__right">
+      <button class="navctl" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      <button class="navctl" id="themeBtn" type="button" aria-label="Switch theme">☀️</button>
+      <button class="btn btn--primary" data-book data-en="Book a demo">Đặt lịch demo</button>
+    </div>
   </header>
 
   <!-- hero -->
   <section class="hero" id="top">
     <div class="hero__copy">
-      <p class="eyebrow"><span class="dot dot--live"></span> Spatial computing studio · Hồ Chí Minh City</p>
-      <h1 class="hero__title">Turn your product into an experience people <em>step inside</em>.</h1>
-      <p class="hero__sub">
-        REALITECH builds AR, VR and 3D digital-twin experiences for retail, real estate and
-        training — on <strong>our own spatial engine</strong>. Book a demo and watch your brand
-        come alive in immersive 3D.
+      <p class="eyebrow"><span class="dot dot--live"></span> <span data-en="Spatial computing studio · Hồ Chí Minh City">Studio điện toán không gian · TP. Hồ Chí Minh</span></p>
+      <h1 class="hero__title" data-en="Turn your product into an experience people <em>step inside</em>.">Biến sản phẩm của bạn thành trải nghiệm khách hàng <em>bước vào được</em>.</h1>
+      <p class="hero__sub" data-en="REALITECH builds AR, VR and 3D digital-twin experiences for retail, real estate and training — on <strong>our own spatial engine</strong>. Book a demo and watch your brand come alive in immersive 3D.">
+        REALITECH xây dựng trải nghiệm AR, VR và bản sao số 3D cho bán lẻ, bất động sản và đào tạo — trên <strong>engine không gian tự phát triển</strong>. Đặt demo và xem thương hiệu của bạn sống dậy trong 3D.
       </p>
       <div class="hero__cta">
-        <button class="btn btn--primary btn--lg" data-book>Book a demo →</button>
-        <a class="btn btn--ghost btn--lg" href="#work">See what we build ↓</a>
+        <button class="btn btn--primary btn--lg" data-book data-en="Book a demo →">Đặt lịch demo →</button>
+        <a class="btn btn--ghost btn--lg" href="#work" data-en="See what we build ↓">Xem chúng tôi xây gì ↓</a>
       </div>
-      <p class="hero__trust"><span>★★★★★</span> 33+ production builds across 5 enterprise verticals</p>
+      <p class="hero__trust"><span>★★★★★</span> <span data-en="33+ production builds across 5 enterprise verticals">33+ bản build production trên 5 ngành doanh nghiệp</span></p>
     </div>
 
     <!-- the framed hero video -->
@@ -69,7 +75,7 @@
 
   <!-- social proof -->
   <section class="proof">
-    <p class="proof__h">Trusted by teams at</p>
+    <p class="proof__h" data-en="Trusted by teams at">Được các đội ngũ tin dùng tại</p>
     <div class="proof__logos">
       <img src="assets/clients/mazda.svg" alt="Mazda" />
       <img src="assets/clients/lamborghini.svg" alt="Lamborghini" />
@@ -81,15 +87,15 @@
 
   <!-- value prop -->
   <section class="value" id="why">
-    <h2 class="value__title">Forget flat renders. Skip the imagination gap.<br /><em>Just let them experience it.</em></h2>
-    <p class="value__sub">A photo tells. A spec sheet explains. A spatial experience makes people <em>feel</em> it — and remember it. That's what closes enterprise deals.</p>
+    <h2 class="value__title" data-en="Forget flat renders. Skip the imagination gap.<br /><em>Just let them experience it.</em>">Quên render phẳng đi. Bỏ qua khoảng cách tưởng tượng.<br /><em>Hãy để khách hàng tự trải nghiệm.</em></h2>
+    <p class="value__sub" data-en="A photo tells. A spec sheet explains. A spatial experience makes people <em>feel</em> it — and remember it. That is what closes enterprise deals.">Một tấm ảnh kể. Một bảng thông số giải thích. Một trải nghiệm không gian khiến người ta <em>cảm nhận</em> — và ghi nhớ. Đó là thứ chốt được hợp đồng doanh nghiệp.</p>
   </section>
 
   <!-- feature cards -->
   <section class="work" id="work">
     <div class="work__head">
-      <p class="eyebrow">[ What we build ]</p>
-      <h2 class="work__title">One engine. Every kind of spatial experience.</h2>
+      <p class="eyebrow" data-en="[ What we build ]">[ Chúng tôi xây gì ]</p>
+      <h2 class="work__title" data-en="One engine. Every kind of spatial experience.">Một engine. Mọi loại trải nghiệm không gian.</h2>
     </div>
     <div class="cards" id="cards"></div>
   </section>
@@ -97,10 +103,10 @@
   <!-- engine -->
   <section class="engine" id="engine">
     <div class="engine__body">
-      <p class="eyebrow">[ The moat ]</p>
-      <h2 class="engine__title">Built on RealitechEditor — our own engine.</h2>
-      <p class="engine__lead">We don't license a black box or subcontract the hard part. The spatial pipeline, the tracking, the runtime are <strong>ours</strong> — so we ship faster, customize deeper, and own the result.</p>
-      <button class="btn btn--primary btn--lg" data-book>Book a demo →</button>
+      <p class="eyebrow" data-en="[ The moat ]">[ Lợi thế cốt lõi ]</p>
+      <h2 class="engine__title" data-en="Built on RealitechEditor — our own engine.">Xây trên RealitechEditor — engine của chính chúng tôi.</h2>
+      <p class="engine__lead" data-en="We do not license a black box or subcontract the hard part. The spatial pipeline, the tracking, the runtime are <strong>ours</strong> — so we ship faster, customize deeper, and own the result.">Chúng tôi không mua license hộp đen, không thuê ngoài phần khó. Pipeline không gian, tracking, runtime đều là <strong>của chúng tôi</strong> — nên ship nhanh hơn, tuỳ biến sâu hơn và làm chủ kết quả.</p>
+      <button class="btn btn--primary btn--lg" data-book data-en="Book a demo →">Đặt lịch demo →</button>
     </div>
     <div class="frame frame--engine">
       <div class="frame__bar"><span class="frame__dots"><i></i><i></i><i></i></span><span class="frame__title">RealitechEditor</span></div>
@@ -115,22 +121,22 @@
 
   <!-- stats -->
   <section class="stats">
-    <div class="stat"><span class="stat__num">33+</span><span class="stat__label">Production builds</span></div>
-    <div class="stat"><span class="stat__num">5</span><span class="stat__label">Enterprise verticals</span></div>
-    <div class="stat"><span class="stat__num">1</span><span class="stat__label">In-house engine</span></div>
-    <div class="stat"><span class="stat__num">∞</span><span class="stat__label">Reality to draw from</span></div>
+    <div class="stat"><span class="stat__num">33+</span><span class="stat__label" data-en="Production builds">Bản build production</span></div>
+    <div class="stat"><span class="stat__num">5</span><span class="stat__label" data-en="Enterprise verticals">Ngành doanh nghiệp</span></div>
+    <div class="stat"><span class="stat__num">1</span><span class="stat__label" data-en="In-house engine">Engine tự phát triển</span></div>
+    <div class="stat"><span class="stat__num">∞</span><span class="stat__label" data-en="Reality to draw from">Thực tại để khai thác</span></div>
   </section>
 
   <!-- final CTA -->
   <section class="final" id="contact">
-    <h2 class="final__title">Ready to make your brand an <em>experience</em>?</h2>
-    <p class="final__sub">Tell us what you're building. We review every request by hand and reply within a business day.</p>
-    <button class="btn btn--primary btn--lg" data-book>Book a demo →</button>
-    <p class="final__fine">No commitment · partner@realitech.dev</p>
+    <h2 class="final__title" data-en="Ready to make your brand an <em>experience</em>?">Sẵn sàng biến thương hiệu thành <em>trải nghiệm</em>?</h2>
+    <p class="final__sub" data-en="Tell us what you are building. We review every request by hand and reply within a business day.">Cho chúng tôi biết bạn đang xây gì. Mọi yêu cầu được xem xét thủ công và phản hồi trong 1 ngày làm việc.</p>
+    <button class="btn btn--primary btn--lg" data-book data-en="Book a demo →">Đặt lịch demo →</button>
+    <p class="final__fine" data-en="No commitment · partner@realitech.dev">Không ràng buộc · partner@realitech.dev</p>
   </section>
 
   <footer class="foot">
-    <span class="foot__brand"><img src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
+    <span class="foot__brand"><img data-logo src="assets/logo-realitech-white.png" alt="REALITECH" /> © <span id="year"></span></span>
     <span class="foot__mid">Reality, engineered.</span>
     <a href="https://realitech.vn">realitech.vn</a>
   </footer>

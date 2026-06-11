@@ -112,13 +112,17 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   accordion), and "Sign in to the portal" links. All CTAs (`data-book`) redirect to
   `portal.realitech.vn/signup?type=…`; the two styles.css files are identical — edit
   one, `cp` to the other (same for app.js).
-- **i18n + theming** (partner/ & affiliate/): Vietnamese is inline/default; English lives
+- **i18n + theming** (ads/, partner/, affiliate/ AND the portal): Vietnamese is inline/default; English lives
   in `data-en` attributes (inner markup uses `&quot;` for quotes), swapped via
   `setLang()` in app.js (button `#langBtn`, localStorage `rt_lang`). Light/dark theme via
   `html[data-theme]` CSS variable overrides (light palette mirrors realitech.vn: white
   surfaces, navy `#002140` text, teal-ink `#2f8c9b` for accent TEXT — `--accent-ink`),
   toggle `#themeBtn`, localStorage `rt_theme`, default = OS preference (no-FOUC inline
-  script in `<head>`). Logos swap white↔color via `img[data-logo]`.
+  script in `<head>`). Logos swap white↔color via `img[data-logo]`. The portal renders the
+  same pattern server-side (single-quoted `data-en='…'` attributes in template literals;
+  bilingual error messages passed as `{vi,en}` objects; `UI_SCRIPT` in `page()` does the
+  swapping; admin page intentionally stays English). ads/app.js holds bilingual JS strings
+  (modal dict `L`, feature `CARDS` with `*_vi` fields).
 - `assets/media/` are intro-trimmed preview loops copied from `previews/`.
 - Deploy any page: `cd <folder> && CLOUDFLARE_ACCOUNT_ID=fdc3fa7b6f02edb0234b6f4bb12e2e98 npx wrangler deploy`
 

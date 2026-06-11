@@ -19,14 +19,14 @@
     return Object.keys(AD).map(function (k) { return k + "=" + AD[k]; }).join(" · ");
   }
 
-  /* ---------- feature cards ---------- */
+  /* ---------- feature cards (VI inline · EN in data-en, swapped by setLang) ---------- */
   var CARDS = [
-    { tag: "Digital Twin", title: "Smart building & city twins", line: "Sensor-linked 3D replicas you can operate and explore.", slug: "digital-twin-smart-building" },
-    { tag: "AR Commerce", title: "Configure & try, true-scale", line: "Every product variant, materialized in the room.", slug: "ar-configurator" },
-    { tag: "VR Training", title: "Risk-free, repeatable training", line: "High-stakes procedures rehearsed with full telemetry.", slug: "vr-training-lab-room" },
-    { tag: "Spatial Nav", title: "AR wayfinding", line: "Turn-by-turn guidance anchored to real space.", slug: "ar-find-way-in-mall" },
-    { tag: "Mixed Reality", title: "Hand-tracked & holographic", line: "Controller-free, natural, direct manipulation.", slug: "mr-hand-tracking" },
-    { tag: "WebAR", title: "No-app, in the browser", line: "True-scale AR straight from a link.", slug: "webar-home-shopping" },
+    { tag: "Digital Twin", title: "Smart building & city twins", title_vi: "Bản sao số toà nhà & đô thị thông minh", line: "Sensor-linked 3D replicas you can operate and explore.", line_vi: "Bản sao 3D kết nối cảm biến — vận hành và khám phá được.", slug: "digital-twin-smart-building" },
+    { tag: "AR Commerce", title: "Configure & try, true-scale", title_vi: "Cấu hình & ướm thử, đúng tỷ lệ thật", line: "Every product variant, materialized in the room.", line_vi: "Mọi biến thể sản phẩm hiện hữu ngay trong căn phòng.", slug: "ar-configurator" },
+    { tag: "VR Training", title: "Risk-free, repeatable training", title_vi: "Đào tạo không rủi ro, lặp lại được", line: "High-stakes procedures rehearsed with full telemetry.", line_vi: "Diễn tập quy trình rủi ro cao với telemetry đầy đủ.", slug: "vr-training-lab-room" },
+    { tag: "Spatial Nav", title: "AR wayfinding", title_vi: "Dẫn đường AR", line: "Turn-by-turn guidance anchored to real space.", line_vi: "Chỉ dẫn từng bước neo vào không gian thật.", slug: "ar-find-way-in-mall" },
+    { tag: "Mixed Reality", title: "Hand-tracked & holographic", title_vi: "Hand-tracking & holographic", line: "Controller-free, natural, direct manipulation.", line_vi: "Thao tác trực tiếp, tự nhiên, không cần tay cầm.", slug: "mr-hand-tracking" },
+    { tag: "WebAR", title: "No-app, in the browser", title_vi: "Không cần app, chạy trên trình duyệt", line: "True-scale AR straight from a link.", line_vi: "AR đúng tỷ lệ thật mở thẳng từ một đường link.", slug: "webar-home-shopping" },
   ];
   function buildCards() {
     var wrap = $("#cards");
@@ -39,8 +39,8 @@
           '<div class="frame__media"><video class="frame__video" muted loop playsinline preload="none" poster="assets/media/' + c.slug + '.jpg"></video></div>' +
         '</div>' +
         '<div class="card__cap"><span class="card__tag">' + esc(c.tag) + '</span>' +
-          '<h3 class="card__title">' + esc(c.title) + '</h3>' +
-          '<p class="card__line">' + esc(c.line) + '</p></div>';
+          '<h3 class="card__title" data-en="' + esc(c.title) + '">' + esc(c.title_vi) + '</h3>' +
+          '<p class="card__line" data-en="' + esc(c.line) + '">' + esc(c.line_vi) + '</p></div>';
       card._slug = c.slug;
       wrap.appendChild(card);
     });
@@ -63,22 +63,41 @@
     cards.forEach(function (c, i) { c.style.transitionDelay = (i % 3) * 70 + "ms"; play.observe(c); reveal.observe(c); });
   }
 
-  /* ---------- Book Demo modal → leads ---------- */
+  /* ---------- Book Demo modal → leads (bilingual) ---------- */
+  var L = {
+    vi: { eyebrow: "[ Đặt lịch demo ]", title: "Xem thương hiệu của bạn trong 3D sống động", sub: "Cho chúng tôi biết đôi chút về bạn. Mọi yêu cầu được xem xét thủ công và phản hồi trong 1 ngày làm việc.",
+      company: "Tên công ty / doanh nghiệp *", phone: "Điện thoại / Zalo / WhatsApp *", email: "Email công việc *", rolePh: "Vai trò của bạn…",
+      roles: [["ceo", "CEO / Founder"], ["marketing", "Marketing"], ["developer", "Developer"], ["designer", "Designer"], ["other", "Khác"]],
+      needs: "Bạn đang tìm hiểu gì? (không bắt buộc)", submit: "Gửi yêu cầu →", fine: "Đến thẳng đội ngũ. Không ràng buộc.",
+      errFill: "Vui lòng điền công ty, số điện thoại và email hợp lệ.", err429: "Quá nhiều yêu cầu — thử lại sau ít phút.", errGeneric: "Có lỗi xảy ra. Email partner@realitech.dev", errNet: "Lỗi mạng. Email partner@realitech.dev",
+      sending: "Đang gửi…", doneTitle: "Đã nhận yêu cầu", done1: "Cảm ơn — chúng tôi sẽ sớm liên hệ ", done2: ".", close: "Đóng" },
+    en: { eyebrow: "[ Book a demo ]", title: "See your brand in immersive 3D", sub: "Tell us a little about you. We review every request by hand and reply within a business day.",
+      company: "Company / business name *", phone: "Phone / Zalo / WhatsApp *", email: "Work email *", rolePh: "Your role…",
+      roles: [["ceo", "CEO / Founder"], ["marketing", "Marketing"], ["developer", "Developer"], ["designer", "Designer"], ["other", "Other"]],
+      needs: "What are you exploring? (optional)", submit: "Send request →", fine: "Straight to our team. No commitment.",
+      errFill: "Please fill company, phone and a valid email.", err429: "Too many requests — try again shortly.", errGeneric: "Something went wrong. Email partner@realitech.dev", errNet: "Network error. Email partner@realitech.dev",
+      sending: "Sending…", doneTitle: "Request received", done1: "Thanks — we will reach out to ", done2: " shortly.", close: "Close" },
+  };
+  function lang() { return document.documentElement.lang === "en" ? "en" : "vi"; }
+  function t() { return L[lang()]; }
+
   var leadModal = $("#leadModal"), leadBody = $("#leadBody");
   function openBook() {
+    var s = t();
     leadBody.innerHTML =
-      '<p class="lead__eyebrow">[ Book a demo ]</p>' +
-      '<h3 class="lead__title">See your brand in immersive 3D</h3>' +
-      '<p class="lead__sub">Tell us a little about you. We review every request by hand and reply within a business day.</p>' +
+      '<p class="lead__eyebrow">' + s.eyebrow + '</p>' +
+      '<h3 class="lead__title">' + s.title + '</h3>' +
+      '<p class="lead__sub">' + s.sub + '</p>' +
       '<form id="leadForm" novalidate>' +
-        '<div class="lead__row"><input name="business_name" placeholder="Company / business name *" autocomplete="organization" required />' +
-        '<input name="phone" placeholder="Phone / Zalo / WhatsApp *" autocomplete="tel" inputmode="tel" required /></div>' +
-        '<div class="lead__row"><input name="email" type="email" placeholder="Work email *" autocomplete="email" required />' +
-        '<select name="role" aria-label="Your role"><option value="">Your role…</option><option value="ceo">CEO / Founder</option><option value="marketing">Marketing</option><option value="developer">Developer</option><option value="designer">Designer</option><option value="other">Other</option></select></div>' +
-        '<textarea name="needs" placeholder="What are you exploring? (optional)" rows="3"></textarea>' +
+        '<div class="lead__row"><input name="business_name" placeholder="' + s.company + '" autocomplete="organization" required />' +
+        '<input name="phone" placeholder="' + s.phone + '" autocomplete="tel" inputmode="tel" required /></div>' +
+        '<div class="lead__row"><input name="email" type="email" placeholder="' + s.email + '" autocomplete="email" required />' +
+        '<select name="role" aria-label="Role"><option value="">' + s.rolePh + '</option>' +
+        s.roles.map(function (r) { return '<option value="' + r[0] + '">' + r[1] + '</option>'; }).join("") + '</select></div>' +
+        '<textarea name="needs" placeholder="' + s.needs + '" rows="3"></textarea>' +
         '<input class="lead__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
-        '<button class="btn btn--primary btn--lg" type="submit" id="leadSubmit">Send request →</button>' +
-        '<p class="lead__fine" id="leadErr">Straight to our team. No commitment.</p>' +
+        '<button class="btn btn--primary btn--lg" type="submit" id="leadSubmit">' + s.submit + '</button>' +
+        '<p class="lead__fine" id="leadErr">' + s.fine + '</p>' +
       '</form>';
     $("#leadForm").addEventListener("submit", onSubmit);
     leadModal.classList.add("open");
@@ -94,7 +113,7 @@
     errEl.classList.remove("err");
     if (d.website) { done(d.email); return; }
     if (!d.business_name || !d.business_name.trim() || !d.phone || !d.phone.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email || "")) {
-      errEl.textContent = "Please fill company, phone and a valid email."; errEl.classList.add("err"); return;
+      errEl.textContent = t().errFill; errEl.classList.add("err"); return;
     }
     var ad = adSummary();
     var needs = (d.needs || "").trim();
@@ -110,28 +129,56 @@
       ref: REF,
       utm: ad,
     };
-    var btn = $("#leadSubmit"); btn.disabled = true; btn.textContent = "Sending…";
+    var btn = $("#leadSubmit"); btn.disabled = true; btn.textContent = t().sending;
     fetch(LEADS_API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
       .then(function (r) {
         if (r.ok) { done(payload.email); return; }
-        if (r.status === 429) throw new Error("Too many requests — try again shortly.");
-        return r.json().catch(function () { return {}; }).then(function (res) { throw new Error((res.errors && res.errors[0] && res.errors[0].message) || "Something went wrong. Email partner@realitech.dev"); });
+        if (r.status === 429) throw new Error(t().err429);
+        return r.json().catch(function () { return {}; }).then(function (res) { throw new Error((res.errors && res.errors[0] && res.errors[0].message) || t().errGeneric); });
       })
-      .catch(function (err) { errEl.textContent = err.message || "Network error. Email partner@realitech.dev"; errEl.classList.add("err"); })
-      .then(function () { btn.disabled = false; btn.textContent = "Send request →"; });
+      .catch(function (err) { errEl.textContent = err.message || t().errNet; errEl.classList.add("err"); })
+      .then(function () { btn.disabled = false; btn.textContent = t().submit; });
   }
   function done(email) {
+    var s = t();
     leadBody.innerHTML =
       '<div class="lead__done"><div class="lead__check">✓</div>' +
-      '<h3 class="lead__title">Request received</h3>' +
-      '<p class="lead__sub">Thanks — we\'ll reach out to <b>' + esc(email) + '</b> shortly.</p>' +
-      '<button class="btn btn--primary" id="leadOk">Close</button></div>';
+      '<h3 class="lead__title">' + s.doneTitle + '</h3>' +
+      '<p class="lead__sub">' + s.done1 + '<b>' + esc(email) + '</b>' + s.done2 + '</p>' +
+      '<button class="btn btn--primary" id="leadOk">' + s.close + '</button></div>';
     $("#leadOk").addEventListener("click", closeBook);
+  }
+
+  /* ---------- theme (dark default · light mirrors realitech.vn) ---------- */
+  function applyTheme(th) {
+    document.documentElement.setAttribute("data-theme", th);
+    [].slice.call(document.querySelectorAll("img[data-logo]")).forEach(function (im) {
+      im.src = "assets/logo-realitech-" + (th === "light" ? "color" : "white") + ".png";
+    });
+    var b = $("#themeBtn"); if (b) b.textContent = th === "light" ? "🌙" : "☀️";
+    try { localStorage.setItem("rt_theme", th); } catch (e) {}
+  }
+
+  /* ---------- language (vi default · en via data-en attributes) ---------- */
+  function setLang(l) {
+    document.documentElement.lang = l;
+    [].slice.call(document.querySelectorAll("[data-en]")).forEach(function (n) {
+      if (n.__vi == null) n.__vi = n.innerHTML;
+      n.innerHTML = l === "en" ? n.getAttribute("data-en") : n.__vi;
+    });
+    var b = $("#langBtn"); if (b) b.textContent = l === "en" ? "VI" : "EN";
+    try { localStorage.setItem("rt_lang", l); } catch (e) {}
   }
 
   /* ---------- wire ---------- */
   buildCards();
   wireCards();
+  var savedTheme; try { savedTheme = localStorage.getItem("rt_theme"); } catch (e) {}
+  applyTheme(savedTheme || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+  var savedLang; try { savedLang = localStorage.getItem("rt_lang"); } catch (e) {}
+  setLang(savedLang === "en" ? "en" : "vi");
+  var tBtn = $("#themeBtn"); if (tBtn) tBtn.addEventListener("click", function () { applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"); });
+  var lBtn = $("#langBtn"); if (lBtn) lBtn.addEventListener("click", function () { setLang(document.documentElement.lang === "en" ? "vi" : "en"); });
   [].slice.call(document.querySelectorAll("[data-book]")).forEach(function (b) { b.addEventListener("click", openBook); });
   $("#leadClose").addEventListener("click", closeBook);
   leadModal.addEventListener("click", function (e) { if (e.target === leadModal) closeBook(); });
