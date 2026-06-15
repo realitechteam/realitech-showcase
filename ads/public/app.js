@@ -67,13 +67,13 @@
   var L = {
     vi: { eyebrow: "[ Đặt demo miễn phí ]", title: "Xem trải nghiệm 3D cho nhóm của bạn", sub: "Cho chúng tôi biết đôi chút về bạn — chúng tôi sẽ làm demo riêng theo nhóm. Xét duyệt thủ công, phản hồi trong 1 ngày làm việc.",
       company: "Tên công ty / tổ chức *", phone: "Điện thoại / Zalo / WhatsApp *", email: "Email công việc *", rolePh: "Bạn thuộc nhóm nào…",
-      roles: [["agency", "Agency / Reseller"], ["education", "Giáo dục"], ["training", "Đào tạo / L&D"], ["marketing", "Marketing"], ["other", "Khác"]],
+      roles: [["retail", "Bán lẻ / TMĐT"], ["marketing", "Marketing"], ["enterprise", "Doanh nghiệp"], ["media", "Nghệ thuật & Truyền thông"], ["education", "Giáo dục"], ["agency", "Agency / Reseller"], ["other", "Khác"]],
       needs: "Bạn đang tìm hiểu gì? (không bắt buộc)", submit: "Gửi yêu cầu →", fine: "Đến thẳng đội ngũ. Không ràng buộc.",
       errFill: "Vui lòng điền công ty, số điện thoại và email hợp lệ.", err429: "Quá nhiều yêu cầu — thử lại sau ít phút.", errGeneric: "Có lỗi xảy ra. Email partner@realitech.dev", errNet: "Lỗi mạng. Email partner@realitech.dev",
       sending: "Đang gửi…", doneTitle: "Đã nhận yêu cầu", done1: "Cảm ơn — chúng tôi sẽ sớm liên hệ ", done2: ".", close: "Đóng" },
     en: { eyebrow: "[ Book a free demo ]", title: "See a 3D experience built for your team", sub: "Tell us a little about you — we will tailor the demo to your segment. Reviewed by hand, reply within a business day.",
       company: "Company / organization *", phone: "Phone / Zalo / WhatsApp *", email: "Work email *", rolePh: "Which group are you…",
-      roles: [["agency", "Agency / Reseller"], ["education", "Education"], ["training", "Training / L&D"], ["marketing", "Marketing"], ["other", "Other"]],
+      roles: [["retail", "Retail / e-commerce"], ["marketing", "Marketing"], ["enterprise", "Enterprise"], ["media", "Media & Art"], ["education", "Education"], ["agency", "Agency / Reseller"], ["other", "Other"]],
       needs: "What are you exploring? (optional)", submit: "Send request →", fine: "Straight to our team. No commitment.",
       errFill: "Please fill company, phone and a valid email.", err429: "Too many requests — try again shortly.", errGeneric: "Something went wrong. Email partner@realitech.dev", errNet: "Network error. Email partner@realitech.dev",
       sending: "Sending…", doneTitle: "Request received", done1: "Thanks — we will reach out to ", done2: " shortly.", close: "Close" },
@@ -185,9 +185,17 @@
     try { localStorage.setItem("rt_lang", l); } catch (e) {}
   }
 
-  /* ---------- per-segment URL routing (/agency, /education, ... or ?seg=) ---------- */
-  var SEGS = { agency: 1, education: 1, training: 1, marketing: 1 };
-  var SEG_ALIAS = { agencies: "agency", reseller: "agency", resellers: "agency", edu: "education", school: "education", schools: "education", teacher: "education", train: "training", marketer: "marketing", marketers: "marketing", mkt: "marketing" };
+  /* ---------- per-segment URL routing (/retail, /enterprise, ... or ?seg=) ---------- */
+  // five content segments scroll to their #seg-… section; "agency" goes to the #reseller band.
+  var SEGS = { retail: 1, marketing: 1, enterprise: 1, media: 1, education: 1, agency: 1 };
+  var SEG_ALIAS = {
+    ecommerce: "retail", "e-commerce": "retail", shop: "retail", store: "retail", retailer: "retail",
+    mkt: "marketing", marketer: "marketing", marketers: "marketing",
+    business: "enterprise", corporate: "enterprise", corp: "enterprise", training: "enterprise", train: "enterprise",
+    art: "media", arts: "media", "media-art": "media", gallery: "media", museum: "media",
+    edu: "education", school: "education", schools: "education", teacher: "education",
+    agencies: "agency", reseller: "agency", resellers: "agency", partner: "agency"
+  };
   function detectSeg() {
     var q = (new URLSearchParams(location.search).get("seg") || "").toLowerCase();
     var p = location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
@@ -199,11 +207,11 @@
     if (!landingSeg) return;
     var tag = document.querySelector('.atags a[href="#seg-' + landingSeg + '"]');
     if (tag) tag.classList.add("is-active");
-    var sec = document.getElementById("seg-" + landingSeg);
-    if (sec) requestAnimationFrame(function () {
-      sec.scrollIntoView({ behavior: "auto", block: "start" });
-      sec.classList.add("is-target");
-      setTimeout(function () { sec.classList.remove("is-target"); }, 2400);
+    var target = landingSeg === "agency" ? document.getElementById("reseller") : document.getElementById("seg-" + landingSeg);
+    if (target) requestAnimationFrame(function () {
+      target.scrollIntoView({ behavior: "auto", block: landingSeg === "agency" ? "center" : "start" });
+      target.classList.add("is-target");
+      setTimeout(function () { target.classList.remove("is-target"); }, 2400);
     });
   }
 

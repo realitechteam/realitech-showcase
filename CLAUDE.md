@@ -104,23 +104,27 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   (utm_source/campaign/term/gclid → `needs`/`demo_project`) for attribution in cpn.
 - `partner/` & `affiliate/` share a generic `app.js` driven by `window.RT` (source + form copy)
   set in their index.html. `ads/` has its own app.js (video feature cards).
-- **`ads/` is an audience-segmented PPC landing** (modeled on mywebar.com): hero with four
-  audience tags → an audience grid (`.tcard` links) → four `.seg` detail sections, one per
-  segment: **Agency/reseller** (CTA → partner.realitech.vn, resell at 25–40%), **Education**
-  (livelier lessons), **Industry training** (process simulation), **Marketing** (WebAR
-  campaigns). The Book-Demo modal's role select IS the segment (`agency|education|training|
-  marketing|other`); segment-specific CTAs use `data-book="<seg>"` to preselect it and tag
+- **`ads/` is an industry-segmented PPC landing** (modeled on mywebar.com): hero with five
+  industry tags → an audience grid (`.tcard` links, `.grid--auto`) → five `.seg` detail
+  sections: **Retail** (ar-configurator), **Marketing** (webar), **Enterprise** (vr-training,
+  folds in process training/equipment/onboarding), **Media & Art** (mr-hand-tracking),
+  **Education** (mixed-reality walkthrough). Agency/reseller is NOT an industry — it's a
+  separate `.reseller` band (`id="reseller"`) that funnels to partner.realitech.vn (resell at
+  25–40%). The Book-Demo modal's role select IS the segment (`retail|marketing|enterprise|
+  media|education|agency|other`); segment CTAs use `data-book="<seg>"` to preselect it and tag
   the lead (`role` + `[ads:<seg>]` in needs). Segment videos lazy-load via `video[data-seg]`
-  + `data-src` (wireSegVideos). ads-only `.seg`/`.atags` CSS lives in ads/public/styles.css —
-  do NOT cp partner's styles.css over it.
+  + `data-src` (wireSegVideos). ads-only `.seg`/`.atags`/`.reseller`/`.grid--auto` CSS lives
+  in ads/public/styles.css — do NOT cp partner's styles.css over it.
 - **Per-segment ad URLs** (point each campaign at its own): pretty paths
-  `ads.realitech.vn/{agency|education|training|marketing}` (plus aliases reseller/edu/
-  school/teacher/train/marketer/mkt) AND `?seg=<seg>` (composes with UTM). Enabled by
-  `not_found_handling: "single-page-application"` in ads/wrangler.jsonc (SPA fallback →
-  index.html); `routeSegment()` in app.js reads path-or-`?seg`, scrolls to + flashes that
-  `.seg` section, highlights the hero tag, and sets `landingSeg` so the Book-Demo form
-  preselects that segment. **Asset refs in ads/ must stay root-absolute** (`/assets/…`,
-  `/styles.css`, `/app.js`) so they resolve under a sub-path — do not make them relative.
+  `ads.realitech.vn/{retail|marketing|enterprise|media|education}` (+ aliases ecommerce/shop,
+  mkt/marketer, business/training/train, art/gallery/museum, edu/school/teacher) and
+  `/agency` (+ reseller/partner) for the reseller band — all also as `?seg=<seg>` (composes
+  with UTM). Enabled by `not_found_handling: "single-page-application"` in ads/wrangler.jsonc
+  (SPA fallback → index.html); `routeSegment()` in app.js reads path-or-`?seg`, scrolls to +
+  flashes the matching `.seg` section (or the `#reseller` band for agency), highlights the
+  hero tag, and sets `landingSeg` so the Book-Demo form preselects that segment. **Asset refs
+  in ads/ must stay root-absolute** (`/assets/…`, `/styles.css`, `/app.js`) so they resolve
+  under a sub-path — do not make them relative.
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
   magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
   default up to 40% / affiliate commission 5% base up to 10% — the base values are the
