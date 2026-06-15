@@ -255,3 +255,34 @@ img { max-width: 100%; }
 .hero__signin a { color: var(--accent-ink); }
 .final__cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 .final__fine a { color: var(--accent-ink); }
+
+/* ============================================================
+   Audience-segmented ad landing (Agency · Education · Training · Marketing)
+   ============================================================ */
+
+/* hero audience tags */
+.atags { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 940px) { .atags { justify-content: center; } }
+.atags a { display: inline-flex; align-items: center; gap: 0.5em; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.02em; color: var(--muted); background: var(--panel); border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 0.5em 0.95em; transition: border-color 0.25s, color 0.25s, transform 0.25s; }
+.atags a:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+.atags a b { color: var(--accent-ink); font-weight: 700; }
+
+/* audience cards link to detail sections */
+a.tcard { text-decoration: none; }
+.tcard__pill { align-self: flex-start; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 0.25em 0.7em; margin-top: 4px; }
+.tcard__go { margin-top: auto; font-family: var(--mono); font-size: 0.74rem; color: var(--accent-ink); padding-top: 8px; }
+
+/* segment detail sections */
+.seg { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: clamp(48px, 9vh, 96px) clamp(18px, 4vw, 44px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 60px); align-items: center; scroll-margin-top: 80px; }
+@media (max-width: 940px) { .seg { grid-template-columns: 1fr; } .seg__media { order: 2; } }
+.seg--alt .seg__media { order: -1; }
+@media (max-width: 940px) { .seg--alt .seg__media { order: 2; } }
+.seg__title { font-family: var(--sans); font-weight: 800; font-size: clamp(1.7rem, 3.8vw, 2.7rem); line-height: 1.06; letter-spacing: -0.02em; margin: 12px 0 16px; }
+.seg__lead { color: var(--muted); font-size: 1.05rem; max-width: 48ch; }
+.seg__lead strong { color: var(--text); }
+.seg__feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 22px 0 28px; }
+.seg__feats li { position: relative; padding-left: 26px; color: var(--muted); font-size: 0.95rem; }
+.seg__feats li::before { content: "→"; position: absolute; left: 0; color: var(--accent-ink); font-weight: 700; }
+.seg__cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.seg__note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted-2); }
+.seg__note a { color: var(--accent-ink); }

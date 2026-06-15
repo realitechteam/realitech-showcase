@@ -104,6 +104,15 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   (utm_source/campaign/term/gclid → `needs`/`demo_project`) for attribution in cpn.
 - `partner/` & `affiliate/` share a generic `app.js` driven by `window.RT` (source + form copy)
   set in their index.html. `ads/` has its own app.js (video feature cards).
+- **`ads/` is an audience-segmented PPC landing** (modeled on mywebar.com): hero with four
+  audience tags → an audience grid (`.tcard` links) → four `.seg` detail sections, one per
+  segment: **Agency/reseller** (CTA → partner.realitech.vn, resell at 25–40%), **Education**
+  (livelier lessons), **Industry training** (process simulation), **Marketing** (WebAR
+  campaigns). The Book-Demo modal's role select IS the segment (`agency|education|training|
+  marketing|other`); segment-specific CTAs use `data-book="<seg>"` to preselect it and tag
+  the lead (`role` + `[ads:<seg>]` in needs). Segment videos lazy-load via `video[data-seg]`
+  + `data-src` (wireSegVideos). ads-only `.seg`/`.atags` CSS lives in ads/public/styles.css —
+  do NOT cp partner's styles.css over it.
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
   magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
   default up to 40% / affiliate commission 5% base up to 10% — the base values are the

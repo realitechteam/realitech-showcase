@@ -65,15 +65,15 @@
 
   /* ---------- Book Demo modal → leads (bilingual) ---------- */
   var L = {
-    vi: { eyebrow: "[ Đặt lịch demo ]", title: "Xem thương hiệu của bạn trong 3D sống động", sub: "Cho chúng tôi biết đôi chút về bạn. Mọi yêu cầu được xem xét thủ công và phản hồi trong 1 ngày làm việc.",
-      company: "Tên công ty / doanh nghiệp *", phone: "Điện thoại / Zalo / WhatsApp *", email: "Email công việc *", rolePh: "Vai trò của bạn…",
-      roles: [["ceo", "CEO / Founder"], ["marketing", "Marketing"], ["developer", "Developer"], ["designer", "Designer"], ["other", "Khác"]],
+    vi: { eyebrow: "[ Đặt demo miễn phí ]", title: "Xem trải nghiệm 3D cho nhóm của bạn", sub: "Cho chúng tôi biết đôi chút về bạn — chúng tôi sẽ làm demo riêng theo nhóm. Xét duyệt thủ công, phản hồi trong 1 ngày làm việc.",
+      company: "Tên công ty / tổ chức *", phone: "Điện thoại / Zalo / WhatsApp *", email: "Email công việc *", rolePh: "Bạn thuộc nhóm nào…",
+      roles: [["agency", "Agency / Reseller"], ["education", "Giáo dục"], ["training", "Đào tạo / L&D"], ["marketing", "Marketing"], ["other", "Khác"]],
       needs: "Bạn đang tìm hiểu gì? (không bắt buộc)", submit: "Gửi yêu cầu →", fine: "Đến thẳng đội ngũ. Không ràng buộc.",
       errFill: "Vui lòng điền công ty, số điện thoại và email hợp lệ.", err429: "Quá nhiều yêu cầu — thử lại sau ít phút.", errGeneric: "Có lỗi xảy ra. Email partner@realitech.dev", errNet: "Lỗi mạng. Email partner@realitech.dev",
       sending: "Đang gửi…", doneTitle: "Đã nhận yêu cầu", done1: "Cảm ơn — chúng tôi sẽ sớm liên hệ ", done2: ".", close: "Đóng" },
-    en: { eyebrow: "[ Book a demo ]", title: "See your brand in immersive 3D", sub: "Tell us a little about you. We review every request by hand and reply within a business day.",
-      company: "Company / business name *", phone: "Phone / Zalo / WhatsApp *", email: "Work email *", rolePh: "Your role…",
-      roles: [["ceo", "CEO / Founder"], ["marketing", "Marketing"], ["developer", "Developer"], ["designer", "Designer"], ["other", "Other"]],
+    en: { eyebrow: "[ Book a free demo ]", title: "See a 3D experience built for your team", sub: "Tell us a little about you — we will tailor the demo to your segment. Reviewed by hand, reply within a business day.",
+      company: "Company / organization *", phone: "Phone / Zalo / WhatsApp *", email: "Work email *", rolePh: "Which group are you…",
+      roles: [["agency", "Agency / Reseller"], ["education", "Education"], ["training", "Training / L&D"], ["marketing", "Marketing"], ["other", "Other"]],
       needs: "What are you exploring? (optional)", submit: "Send request →", fine: "Straight to our team. No commitment.",
       errFill: "Please fill company, phone and a valid email.", err429: "Too many requests — try again shortly.", errGeneric: "Something went wrong. Email partner@realitech.dev", errNet: "Network error. Email partner@realitech.dev",
       sending: "Sending…", doneTitle: "Request received", done1: "Thanks — we will reach out to ", done2: " shortly.", close: "Close" },
@@ -81,9 +81,10 @@
   function lang() { return document.documentElement.lang === "en" ? "en" : "vi"; }
   function t() { return L[lang()]; }
 
-  var leadModal = $("#leadModal"), leadBody = $("#leadBody");
-  function openBook() {
+  var leadModal = $("#leadModal"), leadBody = $("#leadBody"), currentSeg = "";
+  function openBook(seg) {
     var s = t();
+    currentSeg = seg || "";
     leadBody.innerHTML =
       '<p class="lead__eyebrow">' + s.eyebrow + '</p>' +
       '<h3 class="lead__title">' + s.title + '</h3>' +
@@ -93,7 +94,7 @@
         '<input name="phone" placeholder="' + s.phone + '" autocomplete="tel" inputmode="tel" required /></div>' +
         '<div class="lead__row"><input name="email" type="email" placeholder="' + s.email + '" autocomplete="email" required />' +
         '<select name="role" aria-label="Role"><option value="">' + s.rolePh + '</option>' +
-        s.roles.map(function (r) { return '<option value="' + r[0] + '">' + r[1] + '</option>'; }).join("") + '</select></div>' +
+        s.roles.map(function (r) { return '<option value="' + r[0] + '"' + (r[0] === currentSeg ? " selected" : "") + '>' + r[1] + '</option>'; }).join("") + '</select></div>' +
         '<textarea name="needs" placeholder="' + s.needs + '" rows="3"></textarea>' +
         '<input class="lead__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
         '<button class="btn btn--primary btn--lg" type="submit" id="leadSubmit">' + s.submit + '</button>' +
@@ -116,15 +117,17 @@
       errEl.textContent = t().errFill; errEl.classList.add("err"); return;
     }
     var ad = adSummary();
+    var seg = d.role || currentSeg || "";
     var needs = (d.needs || "").trim();
-    if (ad) needs = (needs ? needs + "\n\n" : "") + "[ad] " + ad;
+    var tag = "[ads" + (seg ? ":" + seg : "") + "]";
+    needs = tag + (needs ? " " + needs : "") + (ad ? "\n" + ad : "");
     var payload = {
       business_name: d.business_name.trim(),
       phone: d.phone.trim(),
       email: d.email.trim(),
-      role: d.role || "",
+      role: seg,
       needs: needs,
-      demo_project: AD.utm_campaignname || AD.utm_campaign || AD.utm_term || "ads",
+      demo_project: seg || AD.utm_campaignname || AD.utm_campaign || AD.utm_term || "ads",
       source: "ads",
       ref: REF,
       utm: ad,
@@ -147,6 +150,18 @@
       '<p class="lead__sub">' + s.done1 + '<b>' + esc(email) + '</b>' + s.done2 + '</p>' +
       '<button class="btn btn--primary" id="leadOk">' + s.close + '</button></div>';
     $("#leadOk").addEventListener("click", closeBook);
+  }
+
+  /* ---------- lazy-load + autoplay segment videos on scroll ---------- */
+  function wireSegVideos() {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { if (!v.src && v.dataset.src) v.src = v.dataset.src; v.play().catch(function () {}); }
+        else v.pause();
+      });
+    }, { threshold: 0.35 });
+    [].slice.call(document.querySelectorAll("video[data-seg]")).forEach(function (v) { io.observe(v); });
   }
 
   /* ---------- theme (dark default · light mirrors realitech.vn) ---------- */
@@ -173,13 +188,14 @@
   /* ---------- wire ---------- */
   buildCards();
   wireCards();
+  wireSegVideos();
   var savedTheme; try { savedTheme = localStorage.getItem("rt_theme"); } catch (e) {}
   applyTheme(savedTheme || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
   var savedLang; try { savedLang = localStorage.getItem("rt_lang"); } catch (e) {}
   setLang(savedLang === "en" ? "en" : "vi");
   var tBtn = $("#themeBtn"); if (tBtn) tBtn.addEventListener("click", function () { applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"); });
   var lBtn = $("#langBtn"); if (lBtn) lBtn.addEventListener("click", function () { setLang(document.documentElement.lang === "en" ? "vi" : "en"); });
-  [].slice.call(document.querySelectorAll("[data-book]")).forEach(function (b) { b.addEventListener("click", openBook); });
+  [].slice.call(document.querySelectorAll("[data-book]")).forEach(function (b) { b.addEventListener("click", function () { openBook(b.getAttribute("data-book") || ""); }); });
   $("#leadClose").addEventListener("click", closeBook);
   leadModal.addEventListener("click", function (e) { if (e.target === leadModal) closeBook(); });
   addEventListener("keydown", function (e) { if (e.key === "Escape" && leadModal.classList.contains("open")) closeBook(); });
