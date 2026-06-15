@@ -125,6 +125,19 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   hero tag, and sets `landingSeg` so the Book-Demo form preselects that segment. **Asset refs
   in ads/ must stay root-absolute** (`/assets/…`, `/styles.css`, `/app.js`) so they resolve
   under a sub-path — do not make them relative.
+- **Visual "wow" layer** (ads/partner/affiliate, all additive + `prefers-reduced-motion`
+  safe — see the `wireWow()` block in each app.js + the "Visual wow layer" CSS block):
+  animated cyan **aurora** blobs injected into `.atmos`; **pointer-reactive hero** (cursor
+  glow `--px/--py` + 3D `.frame--hero` tilt; `.hero__title em` gradient shimmer); **holographic
+  `.tcard`** (cursor spotlight `--mx/--my` + hover sheen sweep); **count-up** `.stat__num` on
+  scroll-in (only values with exactly one integer animate — ranges like `25–40%` stay static);
+  logo strip → slow **marquee** (`.proof__logos.marquee` + cloned `.proof__track`). The ads
+  hero also has an **interactive WebGL viewport** (`ads/public/hero3d.js`, `type=module`,
+  Three.js 0.160 from jsdelivr): a holographic icosahedron (wireframe + points) you drag-rotate
+  inside a drifting point cloud. `initHeroWebGL()` in app.js only injects it on desktop with
+  WebGL + no reduced-motion; the `<video>` is the fallback and old browsers never load the
+  module. CSS: `.frame--hero.webgl` fades the canvas in / video out. The portal does NOT have
+  this layer yet (functional app surface).
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
   magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
   default up to 40% / affiliate commission 5% base up to 10% — the base values are the
