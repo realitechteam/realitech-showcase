@@ -88,7 +88,7 @@
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
     [].slice.call(document.querySelectorAll("img[data-logo]")).forEach(function (im) {
-      im.src = "assets/logo-realitech-" + (t === "light" ? "color" : "white") + ".png";
+      im.src = "assets/logo-realitech-" + (t === "light" ? "light" : "white") + ".png";
     });
     var b = $("#themeBtn"); if (b) b.textContent = t === "light" ? "🌙" : "☀️";
     try { localStorage.setItem("rt_theme", t); } catch (e) {}

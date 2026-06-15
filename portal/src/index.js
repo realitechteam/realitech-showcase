@@ -139,7 +139,7 @@ form.inline{display:flex;gap:6px;align-items:center}form.inline input,form.inlin
 `;
 const UI_SCRIPT = `<script>(function(){var d=document;function $(s){return d.querySelector(s)}
 function applyTheme(t){d.documentElement.setAttribute("data-theme",t);
-  [].slice.call(d.querySelectorAll("img[data-logo]")).forEach(function(im){im.src="https://showcase.realitech.vn/assets/logo-realitech-"+(t==="light"?"color":"white")+".png"});
+  [].slice.call(d.querySelectorAll("img[data-logo]")).forEach(function(im){im.src="https://showcase.realitech.vn/assets/logo-realitech-"+(t==="light"?"light":"white")+".png"});
   var b=$("#themeBtn");if(b)b.textContent=t==="light"?"🌙":"☀️";
   try{localStorage.setItem("rt_theme",t)}catch(e){}}
 function setLang(l){d.documentElement.lang=l;
