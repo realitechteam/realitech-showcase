@@ -346,7 +346,7 @@ function adminPage(acc, pending, refs, accounts) {
 /* ============================== HANDLERS ============================== */
 async function getAccount(env, id) { return env.DB.prepare("SELECT * FROM accounts WHERE id=?").bind(id).first(); }
 
-async function doSignup(req, env, url) {
+async function doSignup(req, env, url, ctx) {
   const type = url.searchParams.get("type") === "partner" ? "partner" : "affiliate";
   const f = await req.formData();
   const name = (f.get("name") || "").toString().trim();
@@ -368,6 +368,15 @@ async function doSignup(req, env, url) {
     `INSERT INTO accounts (id,type,name,email,phone,company,password_hash,password_salt,status,ref_code,commission_rate,discount_rate,created_at,approved_at)
      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
   ).bind(id, type, name, email, phone, company, hash, salt, active ? "active" : "pending", code, commission, discount, now(), active ? now() : null).run();
+  // Visibility in cpn: forward the new partner/affiliate signup as a tagged record
+  // (best-effort, non-blocking). Approval / commission / payouts still live in the portal admin.
+  if (env.CPN_LEADS_URL) {
+    const fwd = fetch(env.CPN_LEADS_URL, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ business_name: name, phone: phone || "—", email, role: type,
+        needs: "[" + type + " signup] " + (company || "") + (phone ? "" : "\n(no phone provided)"),
+        demo_project: type + "_signup", source: type + "_signup" }) }).catch(() => {});
+    if (ctx && ctx.waitUntil) ctx.waitUntil(fwd);
+  }
   if (active) {
     const token = await signSession({ sub: id, role: "affiliate", type, name, exp: Date.now() + SESSION_TTL }, env.SESSION_SECRET);
     return redirect("/dashboard", { "Set-Cookie": cookie(token, SESSION_TTL / 1000) });
@@ -523,7 +532,7 @@ export default {
 
     // auth pages
     if (path === "/login") return req.method === "POST" ? doLogin(req, env) : html(loginPage());
-    if (path === "/signup") return req.method === "POST" ? doSignup(req, env, url) : html(signupPage(url.searchParams.get("type") === "partner" ? "partner" : "affiliate"));
+    if (path === "/signup") return req.method === "POST" ? doSignup(req, env, url, ctx) : html(signupPage(url.searchParams.get("type") === "partner" ? "partner" : "affiliate"));
     if (path === "/pending") return html(pendingPage());
     if (path === "/logout") return redirect("/login", { "Set-Cookie": cookie("", 0) });
 

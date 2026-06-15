@@ -176,6 +176,11 @@ decoupled from the platform MongoDB). Worker `realitech-portal`, server-rendered
 - **Flows:** affiliate signup → **auto-active** + ref code → dashboard. partner signup →
   **pending** → admin approves (sets commission/discount) → active. Login = signed
   session cookie (`rt_portal`, HMAC `SESSION_SECRET`). Passwords = PBKDF2 (Web Crypto).
+  Each signup ALSO best-effort forwards a tagged record to cpn (`CPN_LEADS_URL`,
+  `source: partner_signup|affiliate_signup`) so accounts are *visible* in cpn/leads —
+  but the **accounts themselves (approve / commission / payouts) are managed only in the
+  portal admin / D1**, never written back from cpn. cpn just sees leads, referrals, and
+  now signup records.
 - **Pages:** `/login`, `/signup?type=affiliate|partner`, `/dashboard` (referrals + stage +
   commission/discount + share links + earned/paid/balance stats + payout history),
   `/admin` (approve partners, move pipeline → auto commission = deal_value × rate,
