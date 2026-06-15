@@ -137,7 +137,10 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   inside a drifting point cloud. `initHeroWebGL()` in app.js only injects it on desktop with
   WebGL + no reduced-motion; the `<video>` is the fallback and old browsers never load the
   module. CSS: `.frame--hero.webgl` fades the canvas in / video out. The portal does NOT have
-  this layer yet (functional app surface).
+  this WebGL hero. The **portal** carries a tasteful subset (in `CSS` + `UI_SCRIPT` of
+  index.js): the aurora backdrop (`.pbg` injected into body), `.card` cursor spotlight
+  (`.card::after`), and count-up on `.stat .n` (income-overview/performance numbers — the
+  count-up regex is written `\\d` in the template literal so it emits `\d`, not `d`).
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
   magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
   default up to 40% / affiliate commission 5% base up to 10% — the base values are the

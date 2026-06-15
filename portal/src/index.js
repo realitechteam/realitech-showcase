@@ -109,7 +109,19 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cyan)}
 .btn:hover{background:rgba(255,255,255,.06);text-decoration:none}
 .btn-p{background:var(--cyan);color:var(--onc);border-color:var(--cyan)}.btn-p:hover{background:var(--cyan2)}
 .btn-sm{padding:.4em .8em;font-size:.8rem}
-.card{background:var(--card-bg);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.card{background:var(--card-bg);border:1px solid var(--line);border-radius:var(--r);padding:22px;position:relative;isolation:isolate}
+.card::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%),rgba(87,206,219,.14),transparent 60%)}
+.card:hover::after{opacity:1}
+.pbg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.pbg i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.32;mix-blend-mode:screen;will-change:transform}
+.pbg i:nth-child(1){width:46vw;height:46vw;left:-6vw;top:-10vw;background:radial-gradient(circle,rgba(87,206,219,.5),transparent 65%);animation:pa1 24s ease-in-out infinite}
+.pbg i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:2vw;background:radial-gradient(circle,rgba(59,168,181,.45),transparent 65%);animation:pa2 29s ease-in-out infinite}
+.pbg i:nth-child(3){width:38vw;height:38vw;left:34vw;bottom:-10vw;background:radial-gradient(circle,rgba(130,225,232,.3),transparent 65%);animation:pa3 33s ease-in-out infinite}
+@keyframes pa1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,4vw) scale(1.15)}}
+@keyframes pa2{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-5vw,6vw) scale(.9)}}
+@keyframes pa3{0%,100%{transform:translate(0,0) scale(.95)}50%{transform:translate(-4vw,-5vw) scale(1.1)}}
+html[data-theme="light"] .pbg i{opacity:.2;mix-blend-mode:multiply}
+@media(prefers-reduced-motion:reduce){.pbg i{animation:none!important}}
 .grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
 @media(max-width:880px){.g5{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
@@ -152,6 +164,13 @@ var sl;try{sl=localStorage.getItem("rt_lang")}catch(e){}
 setLang(sl==="en"?"en":"vi");
 var tb=$("#themeBtn");if(tb)tb.addEventListener("click",function(){applyTheme(d.documentElement.getAttribute("data-theme")==="light"?"dark":"light")});
 var lb=$("#langBtn");if(lb)lb.addEventListener("click",function(){setLang(d.documentElement.lang==="en"?"vi":"en")});
+/* visual wow: aurora backdrop + card spotlight + count-up stats */
+var rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+var fp=window.matchMedia&&matchMedia("(hover: hover) and (pointer: fine)").matches;
+if(!rm&&!$(".pbg")){var bg=d.createElement("div");bg.className="pbg";bg.setAttribute("aria-hidden","true");bg.innerHTML="<i></i><i></i><i></i>";d.body.insertBefore(bg,d.body.firstChild)}
+if(fp){[].slice.call(d.querySelectorAll(".card")).forEach(function(c){c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect();c.style.setProperty("--mx",((e.clientX-r.left)/r.width*100)+"%");c.style.setProperty("--my",((e.clientY-r.top)/r.height*100)+"%")})})}
+function countN(el){var m=el.textContent.trim().match(/^([^\\d]*)([\\d.,]+)([^\\d]*)$/);if(!m)return;var pre=m[1],g=m[2].indexOf(",")>=0,target=parseInt(m[2].replace(/[.,]/g,""),10),suf=m[3];if(!isFinite(target)||target<=0)return;var t0=0;function f(n){return g?n.toLocaleString("en-US"):String(n)}function step(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/1100),e=1-Math.pow(1-p,3);el.textContent=pre+f(Math.round(e*target))+suf;if(p<1)requestAnimationFrame(step)}el.textContent=pre+f(0)+suf;requestAnimationFrame(step)}
+if(!rm){var nums=[].slice.call(d.querySelectorAll(".stat .n"));if(nums.length){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);countN(e.target)})},{threshold:.6});nums.forEach(function(n){io.observe(n)})}}
 })()</script>`;
 const CTL_BTNS = `<button class="navctl" id="langBtn" type="button">EN</button><button class="navctl" id="themeBtn" type="button">☀️</button>`;
 function page(title, body, opts = {}) {
