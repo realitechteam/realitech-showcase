@@ -105,8 +105,88 @@
     try { localStorage.setItem("rt_lang", l); } catch (e) {}
   }
 
+  /* ===================== visual "wow" layer ===================== */
+  var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  function injectAurora() {
+    var atmos = document.querySelector(".atmos");
+    if (!atmos || reduceMotion || atmos.querySelector(".atmos__aurora")) return;
+    var au = document.createElement("div");
+    au.className = "atmos__aurora"; au.setAttribute("aria-hidden", "true");
+    au.innerHTML = "<i></i><i></i><i></i>";
+    atmos.insertBefore(au, atmos.firstChild);
+  }
+
+  function wirePointerHero() {
+    var hero = document.querySelector(".hero");
+    if (!hero || !finePointer || reduceMotion) return;
+    var frame = hero.querySelector(".frame--hero");
+    var tiltFrame = frame && !frame.querySelector("canvas"); // ads hero uses canvas drag instead
+    var raf = 0, px = 50, py = 50, tx = 0, ty = 0;
+    function apply() {
+      raf = 0;
+      hero.style.setProperty("--px", px + "%"); hero.style.setProperty("--py", py + "%");
+      if (tiltFrame) frame.style.transform = "perspective(1100px) rotateX(" + tx.toFixed(2) + "deg) rotateY(" + ty.toFixed(2) + "deg)";
+    }
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      px = x * 100; py = y * 100; tx = (0.5 - y) * 6; ty = (x - 0.5) * 8;
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+    hero.addEventListener("pointerenter", function () { hero.classList.add("spot"); });
+    hero.addEventListener("pointerleave", function () { hero.classList.remove("spot"); if (tiltFrame) frame.style.transform = ""; });
+  }
+
+  function wireCardSpotlight() {
+    if (!finePointer) return;
+    [].slice.call(document.querySelectorAll(".tcard")).forEach(function (c) {
+      c.addEventListener("pointermove", function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+        c.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+      });
+    });
+  }
+
+  function wireCountUp() {
+    var nums = [].slice.call(document.querySelectorAll(".stat__num"));
+    if (!nums.length || reduceMotion) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (!e.isIntersecting) return; io.unobserve(e.target); countOne(e.target); });
+    }, { threshold: 0.6 });
+    nums.forEach(function (n) { io.observe(n); });
+  }
+  function countOne(el) {
+    var m = el.textContent.trim().match(/^(\D*)(\d+)(\D*)$/); // exactly one integer → animate
+    if (!m) return;
+    var pre = m[1], target = parseInt(m[2], 10), suf = m[3];
+    if (target <= 0) return;
+    var t0 = 0;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 1100), eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + Math.round(eased * target) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = pre + "0" + suf; requestAnimationFrame(step);
+  }
+
+  function wireMarquee() {
+    var strip = document.querySelector(".proof__logos");
+    if (!strip || reduceMotion || strip.classList.contains("marquee")) return;
+    var imgs = [].slice.call(strip.children);
+    if (imgs.length < 4) return;
+    var track = document.createElement("div"); track.className = "proof__track";
+    imgs.forEach(function (im) { track.appendChild(im); });
+    [].slice.call(track.children).forEach(function (im) { track.appendChild(im.cloneNode(true)); });
+    strip.appendChild(track); strip.classList.add("marquee");
+  }
+
+  function wireWow() { injectAurora(); wirePointerHero(); wireCardSpotlight(); wireCountUp(); wireMarquee(); }
+
   /* ---------- wire ---------- */
-  wireReveal(); wireVideos();
+  wireReveal(); wireVideos(); wireWow();
   var savedTheme; try { savedTheme = localStorage.getItem("rt_theme"); } catch (e) {}
   applyTheme(savedTheme || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
   var savedLang; try { savedLang = localStorage.getItem("rt_lang"); } catch (e) {}

@@ -307,3 +307,55 @@ a.tcard { text-decoration: none; }
 .reseller__line { color: var(--muted); font-size: 1rem; max-width: 52ch; }
 .reseller__cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 @media (max-width: 820px) { .reseller__cta { align-items: stretch; } }
+
+/* ============================================================
+   Visual "wow" layer — aurora · shimmer · pointer hero · holo cards · marquee
+   Degrades cleanly: prefers-reduced-motion kills animation; effects are additive.
+   ============================================================ */
+
+/* animated aurora backdrop (injected into .atmos by JS) */
+.atmos__aurora { position: absolute; inset: -10% -5%; z-index: 0; pointer-events: none; }
+.atmos__aurora i { position: absolute; display: block; border-radius: 50%; filter: blur(70px); opacity: 0.4; mix-blend-mode: screen; will-change: transform; }
+.atmos__aurora i:nth-child(1) { width: 46vw; height: 46vw; left: -6vw; top: -8vw; background: radial-gradient(circle, rgba(87,206,219,0.5), transparent 65%); animation: aur1 22s ease-in-out infinite; }
+.atmos__aurora i:nth-child(2) { width: 40vw; height: 40vw; right: -8vw; top: 3vw; background: radial-gradient(circle, rgba(59,168,181,0.45), transparent 65%); animation: aur2 27s ease-in-out infinite; }
+.atmos__aurora i:nth-child(3) { width: 38vw; height: 38vw; left: 32vw; top: 14vw; background: radial-gradient(circle, rgba(130,225,232,0.32), transparent 65%); animation: aur3 31s ease-in-out infinite; }
+@keyframes aur1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw,4vw) scale(1.15); } }
+@keyframes aur2 { 0%,100% { transform: translate(0,0) scale(1.05); } 50% { transform: translate(-5vw,6vw) scale(0.9); } }
+@keyframes aur3 { 0%,100% { transform: translate(0,0) scale(0.95); } 50% { transform: translate(-4vw,-5vw) scale(1.1); } }
+html[data-theme="light"] .atmos__aurora i { opacity: 0.22; mix-blend-mode: multiply; }
+
+/* headline shimmer on accent words */
+.hero__title em { background: linear-gradient(100deg, var(--accent-2), var(--accent-ink) 38%, var(--accent-2) 50%, var(--accent-ink) 62%, var(--accent-2)); background-size: 240% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 7s linear infinite; }
+@keyframes shimmer { to { background-position: 240% 0; } }
+
+/* pointer-reactive hero: cursor glow + 3D frame tilt (tilt set by JS) */
+.hero { --px: 50%; --py: 50%; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.5s; background: radial-gradient(460px circle at var(--px) var(--py), rgba(87,206,219,0.16), transparent 62%); }
+.hero.spot::before { opacity: 1; }
+.hero__copy, .frame--hero { position: relative; z-index: 1; }
+.frame--hero { transition: transform 0.4s var(--ease); transform-style: preserve-3d; }
+
+/* holographic cards: cursor spotlight + sheen sweep on hover */
+.tcard { --mx: 50%; --my: 50%; position: relative; overflow: hidden; }
+.tcard::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0; opacity: 0; transition: opacity 0.35s; background: radial-gradient(220px circle at var(--mx) var(--my), rgba(87,206,219,0.16), transparent 60%); }
+.tcard:hover::before { opacity: 1; }
+.tcard > * { position: relative; z-index: 1; }
+.tcard::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.10) 46%, rgba(130,225,232,0.16) 52%, transparent 66%); transform: translateX(-130%); opacity: 0; transition: transform 0.85s var(--ease), opacity 0.3s; }
+.tcard:hover::after { transform: translateX(130%); opacity: 1; }
+html[data-theme="light"] .tcard::after { background: linear-gradient(115deg, transparent 32%, rgba(47,140,155,0.12) 50%, transparent 66%); }
+
+/* logo marquee (track + clone built by JS) */
+.proof__logos.marquee { flex-wrap: nowrap; overflow: hidden; justify-content: flex-start; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.proof__track { display: flex; align-items: center; gap: clamp(26px, 5vw, 60px); padding-left: clamp(26px, 5vw, 60px); animation: marquee 36s linear infinite; }
+.proof__logos.marquee:hover .proof__track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) { .atmos__aurora i, .hero__title em, .proof__track { animation: none !important; } }
+
+/* ads hero: interactive WebGL viewport (overlays the fallback video) */
+#heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 0.8s var(--ease); touch-action: none; z-index: 2; }
+.frame--hero.webgl #heroCanvas { opacity: 1; }
+.frame--hero.webgl .frame__video { opacity: 0; transition: opacity 0.8s; }
+.frame--hero.webgl .frame__drag { opacity: 1; }
+.frame__drag { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: rgba(7,9,12,0.5); border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 0.3em 0.8em; opacity: 0; transition: opacity 0.6s 0.4s; pointer-events: none; }
+html[data-theme="light"] .frame__drag { background: rgba(255,255,255,0.6); }
