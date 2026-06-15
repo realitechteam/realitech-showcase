@@ -113,6 +113,14 @@ Each: `<folder>/public/` (index.html, styles.css, app.js, assets/) + `<folder>/w
   the lead (`role` + `[ads:<seg>]` in needs). Segment videos lazy-load via `video[data-seg]`
   + `data-src` (wireSegVideos). ads-only `.seg`/`.atags` CSS lives in ads/public/styles.css —
   do NOT cp partner's styles.css over it.
+- **Per-segment ad URLs** (point each campaign at its own): pretty paths
+  `ads.realitech.vn/{agency|education|training|marketing}` (plus aliases reseller/edu/
+  school/teacher/train/marketer/mkt) AND `?seg=<seg>` (composes with UTM). Enabled by
+  `not_found_handling: "single-page-application"` in ads/wrangler.jsonc (SPA fallback →
+  index.html); `routeSegment()` in app.js reads path-or-`?seg`, scrolls to + flashes that
+  `.seg` section, highlights the hero tag, and sets `landingSeg` so the Book-Demo form
+  preselects that segment. **Asset refs in ads/ must stay root-absolute** (`/assets/…`,
+  `/styles.css`, `/app.js`) so they resolve under a sub-path — do not make them relative.
 - `partner/` & `affiliate/` follow a **dual-track program layout** (modeled on
   magicblocks.ai/partner-program): hero with concrete numbers (partner margin 25%
   default up to 40% / affiliate commission 5% base up to 10% — the base values are the

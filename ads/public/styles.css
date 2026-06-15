@@ -286,3 +286,12 @@ a.tcard { text-decoration: none; }
 .seg__cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .seg__note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted-2); }
 .seg__note a { color: var(--accent-ink); }
+
+/* per-segment URL landing: highlight matching hero tag + flash the target section */
+.atags a.is-active { color: var(--text); border-color: var(--accent); background: var(--panel-2); }
+.seg.is-target { animation: segGlow 2.4s var(--ease) forwards; border-radius: var(--r-5); }
+@keyframes segGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(87, 206, 219, 0); }
+  22%  { box-shadow: 0 0 0 1px var(--accent), 0 0 70px -8px rgba(87, 206, 219, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(87, 206, 219, 0); }
+}

@@ -36,7 +36,7 @@
       card.innerHTML =
         '<div class="frame">' +
           '<div class="frame__bar"><span class="frame__dots"><i></i><i></i><i></i></span><span class="frame__title">' + esc(c.tag.toLowerCase()) + '</span></div>' +
-          '<div class="frame__media"><video class="frame__video" muted loop playsinline preload="none" poster="assets/media/' + c.slug + '.jpg"></video></div>' +
+          '<div class="frame__media"><video class="frame__video" muted loop playsinline preload="none" poster="/assets/media/' + c.slug + '.jpg"></video></div>' +
         '</div>' +
         '<div class="card__cap"><span class="card__tag">' + esc(c.tag) + '</span>' +
           '<h3 class="card__title" data-en="' + esc(c.title) + '">' + esc(c.title_vi) + '</h3>' +
@@ -53,7 +53,7 @@
       es.forEach(function (e) {
         var v = e.target.querySelector("video");
         if (!v) return;
-        if (e.isIntersecting) { if (!v.src) v.src = "assets/media/" + e.target._slug + ".mp4"; v.play().catch(function () {}); }
+        if (e.isIntersecting) { if (!v.src) v.src = "/assets/media/" + e.target._slug + ".mp4"; v.play().catch(function () {}); }
         else v.pause();
       });
     }, { threshold: 0.4 });
@@ -81,10 +81,10 @@
   function lang() { return document.documentElement.lang === "en" ? "en" : "vi"; }
   function t() { return L[lang()]; }
 
-  var leadModal = $("#leadModal"), leadBody = $("#leadBody"), currentSeg = "";
+  var leadModal = $("#leadModal"), leadBody = $("#leadBody"), currentSeg = "", landingSeg = "";
   function openBook(seg) {
     var s = t();
-    currentSeg = seg || "";
+    currentSeg = seg || landingSeg || "";
     leadBody.innerHTML =
       '<p class="lead__eyebrow">' + s.eyebrow + '</p>' +
       '<h3 class="lead__title">' + s.title + '</h3>' +
@@ -168,7 +168,7 @@
   function applyTheme(th) {
     document.documentElement.setAttribute("data-theme", th);
     [].slice.call(document.querySelectorAll("img[data-logo]")).forEach(function (im) {
-      im.src = "assets/logo-realitech-" + (th === "light" ? "color" : "white") + ".png";
+      im.src = "/assets/logo-realitech-" + (th === "light" ? "color" : "white") + ".png";
     });
     var b = $("#themeBtn"); if (b) b.textContent = th === "light" ? "🌙" : "☀️";
     try { localStorage.setItem("rt_theme", th); } catch (e) {}
@@ -185,6 +185,28 @@
     try { localStorage.setItem("rt_lang", l); } catch (e) {}
   }
 
+  /* ---------- per-segment URL routing (/agency, /education, ... or ?seg=) ---------- */
+  var SEGS = { agency: 1, education: 1, training: 1, marketing: 1 };
+  var SEG_ALIAS = { agencies: "agency", reseller: "agency", resellers: "agency", edu: "education", school: "education", schools: "education", teacher: "education", train: "training", marketer: "marketing", marketers: "marketing", mkt: "marketing" };
+  function detectSeg() {
+    var q = (new URLSearchParams(location.search).get("seg") || "").toLowerCase();
+    var p = location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+    var c = q || p;
+    return SEGS[c] ? c : (SEG_ALIAS[c] || "");
+  }
+  function routeSegment() {
+    landingSeg = detectSeg();
+    if (!landingSeg) return;
+    var tag = document.querySelector('.atags a[href="#seg-' + landingSeg + '"]');
+    if (tag) tag.classList.add("is-active");
+    var sec = document.getElementById("seg-" + landingSeg);
+    if (sec) requestAnimationFrame(function () {
+      sec.scrollIntoView({ behavior: "auto", block: "start" });
+      sec.classList.add("is-target");
+      setTimeout(function () { sec.classList.remove("is-target"); }, 2400);
+    });
+  }
+
   /* ---------- wire ---------- */
   buildCards();
   wireCards();
@@ -193,6 +215,7 @@
   applyTheme(savedTheme || (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
   var savedLang; try { savedLang = localStorage.getItem("rt_lang"); } catch (e) {}
   setLang(savedLang === "en" ? "en" : "vi");
+  routeSegment();
   var tBtn = $("#themeBtn"); if (tBtn) tBtn.addEventListener("click", function () { applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"); });
   var lBtn = $("#langBtn"); if (lBtn) lBtn.addEventListener("click", function () { setLang(document.documentElement.lang === "en" ? "vi" : "en"); });
   [].slice.call(document.querySelectorAll("[data-book]")).forEach(function (b) { b.addEventListener("click", function () { openBook(b.getAttribute("data-book") || ""); }); });
